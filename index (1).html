@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CourtPath Public Review Site</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root, [data-theme="light"] {
+      --bg:#f7f6f2; --surface:#fbfbf8; --surface2:#f0ede7; --line:#d7d3cb; --text:#26231d; --muted:#6f6a61;
+      --primary:#01696f; --primary2:#0c4e54; --accent:#d7eceb; --ok:#437a22; --warn:#964219;
+      --shadow:0 18px 45px rgba(36,34,28,.09); --r1:16px; --r2:28px;
+    }
+    [data-theme="dark"] {
+      --bg:#171614; --surface:#1d1b18; --surface2:#25221e; --line:#3b3833; --text:#eee7db; --muted:#ada598;
+      --primary:#5da6b0; --primary2:#82c1c9; --accent:#243335; --ok:#7bb15c; --warn:#da9d75;
+      --shadow:0 24px 55px rgba(0,0,0,.38);
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:Inter,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+    a{color:inherit} .wrap{max-width:1180px;margin:0 auto;padding:24px} .top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:8px 0 22px}
+    .logo{display:flex;align-items:center;gap:12px;font-weight:700}.logo svg{width:40px;height:40px}.toggle{border:1px solid var(--line);background:var(--surface);padding:10px 14px;border-radius:999px}
+    .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;align-items:stretch}.panel,.card,.story{background:var(--surface);border:1px solid var(--line);border-radius:var(--r2);box-shadow:var(--shadow)}
+    .panel{padding:34px}.eyebrow{font-size:.85rem;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--primary)} h1{font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.7rem,6vw,5.4rem);line-height:.96;max-width:10ch;margin:.45rem 0 1rem}
+    .lede{font-size:1.15rem;color:var(--muted);max-width:60ch}.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}.btn{text-decoration:none;padding:12px 16px;border-radius:999px;border:1px solid var(--line);font-weight:600;display:inline-flex;align-items:center;justify-content:center}
+    .btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}.btn.primary:hover{background:var(--primary2)} .meta{padding:28px;display:flex;flex-direction:column;gap:16px;justify-content:space-between}
+    .metaBox{padding:16px 0;border-bottom:1px solid var(--line)} .metaBox:last-child{border-bottom:none}.big{font-size:2rem;font-weight:700;line-height:1}
+    .sectionHead{display:flex;justify-content:space-between;gap:16px;align-items:end;margin:30px 0 14px}.sectionHead h2{margin:0;font-family:'Instrument Serif',serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:400}.sectionHead p{margin:0;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.card{padding:22px;display:flex;flex-direction:column;gap:14px}.tag{display:inline-flex;width:max-content;padding:7px 11px;border-radius:999px;background:var(--accent);color:var(--primary);font-size:.84rem;font-weight:700}
+    .card h3{margin:0;font-size:1.1rem}.card p,.muted{margin:0;color:var(--muted)} .linkList{display:flex;flex-direction:column;gap:10px;margin-top:auto}.link{display:flex;justify-content:space-between;gap:12px;align-items:center;text-decoration:none;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface2)}
+    .story{padding:26px;margin-top:18px}.story p{margin:.6rem 0;color:var(--muted)} .story strong{color:var(--text)} .check{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}.item{padding:12px 14px;border-radius:14px;background:var(--surface2);border:1px solid var(--line)}
+    .note{margin:24px 0 0;padding:18px 20px;border-radius:18px;background:var(--surface2);color:var(--muted)}
+    @media (max-width: 960px){.hero,.grid,.check{grid-template-columns:1fr}h1{max-width:none}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <div class="logo">
+        <svg viewBox="0 0 64 64" fill="none" aria-label="CourtPath logo">
+          <rect x="8" y="10" width="48" height="44" rx="14" stroke="currentColor" stroke-width="4"></rect>
+          <path d="M20 22h24M20 32h18M20 42h12" stroke="currentColor" stroke-width="4" stroke-linecap="round"></path>
+          <path d="M44 38l6 6 10-14" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <span>CourtPath Public Review</span>
+      </div>
+      <button class="toggle" data-theme-toggle aria-label="Switch theme">Toggle theme</button>
+    </header>
+
+    <section class="hero">
+      <div class="panel">
+        <div class="eyebrow">Public reviewer version</div>
+        <h1>A clear one-page view of CourtPath.</h1>
+        <p class="lede">This self-contained site is meant for outside review. It explains the problem, the product, the current prototype, and the next build direction without requiring someone to sort through a large file library.</p>
+        <div class="cta">
+          <a class="btn primary" href="../courtpath-app/courtpath-app-prototype.html" target="_blank" rel="noopener noreferrer">Open current prototype</a>
+          <a class="btn" href="#materials">See review materials</a>
+        </div>
+      </div>
+      <aside class="meta panel">
+        <div>
+          <div class="tag">What this is</div>
+          <div class="metaBox"><div class="big">1</div><div class="muted">single page to send to a reviewer</div></div>
+          <div class="metaBox"><div class="big">4</div><div class="muted">core assets summarized here</div></div>
+          <div class="metaBox"><div class="big">1</div><div class="muted">main prototype chosen as the current demo</div></div>
+        </div>
+        <p class="muted">Best quick path: prototype, then PRD, then pitch draft, then landing page copy.</p>
+      </aside>
+    </section>
+
+    <div class="sectionHead">
+      <h2>What CourtPath is</h2>
+      <p>A practical plain-language legal workflow product.</p>
+    </div>
+    <section class="story">
+      <p><strong>CourtPath</strong> is designed to help people move through legal and court-related processes with more clarity, structure, and confidence.</p>
+      <p>Instead of forcing users to decode scattered instructions, it organizes the journey into guided intake, matter tracking, document readiness, next actions, and escalation points when human help is needed.</p>
+      <p>The project has already moved beyond idea stage into product definition, prototype design, and technical packaging for a future implementation.</p>
+    </section>
+
+    <div class="sectionHead" id="materials">
+      <h2>Review materials</h2>
+      <p>The key materials are summarized here, with source links below.</p>
+    </div>
+    <section class="grid">
+      <article class="card">
+        <div class="tag">Prototype</div>
+        <h3>Current interactive demo</h3>
+        <p>The strongest prototype file presents the product as a guided legal workflow: intake, matter overview, filing readiness, and action guidance.</p>
+        <div class="linkList">
+          <a class="link" href="../courtpath-app/courtpath-app-prototype.html" target="_blank" rel="noopener noreferrer"><span>Open prototype</span><span>↗</span></a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="tag">Product</div>
+        <h3>PRD and system definition</h3>
+        <p>The PRD defines target users, product modules, user flows, and the practical shape of the MVP and later platform direction.</p>
+        <div class="linkList">
+          <a class="link" href="../courtpath-prd.md" target="_blank" rel="noopener noreferrer"><span>Open PRD</span><span>↗</span></a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="tag">Narrative</div>
+        <h3>Pitch and launch message</h3>
+        <p>The pitch draft frames the opportunity; the landing-page copy frames the message a user or partner would first encounter.</p>
+        <div class="linkList">
+          <a class="link" href="../courtpath-pitch-deck-draft.md" target="_blank" rel="noopener noreferrer"><span>Open pitch draft</span><span>↗</span></a>
+          <a class="link" href="../courtpath-landing-page-copy.md" target="_blank" rel="noopener noreferrer"><span>Open landing copy</span><span>↗</span></a>
+        </div>
+      </article>
+    </section>
+
+    <div class="sectionHead">
+      <h2>Reviewer guide</h2>
+      <p>Use the path that matches the person reviewing it.</p>
+    </div>
+    <section class="story">
+      <div class="check">
+        <div class="item"><strong>General reviewer:</strong> Start with the prototype, then the PRD.</div>
+        <div class="item"><strong>Business reviewer:</strong> Prototype, pitch draft, landing copy, then PRD.</div>
+        <div class="item"><strong>Technical reviewer:</strong> Prototype, PRD, schema/API materials, then production README files.</div>
+        <div class="item"><strong>Short on time:</strong> Spend 10 minutes on the prototype and PRD only.</div>
+      </div>
+    </section>
+
+    <div class="sectionHead">
+      <h2>Source file bundle</h2>
+      <p>These are still the main files worth keeping in your own storage.</p>
+    </div>
+    <section class="story">
+      <p>You should still keep your original source files. This public review page is the presentation layer, but the files below remain the underlying project assets you own and may need to edit, back up, or hand to a designer or developer later.</p>
+      <div class="check">
+        <div class="item"><code>courtpath-master-index.md</code></div>
+        <div class="item"><code>courtpath-prd.md</code></div>
+        <div class="item"><code>courtpath-pitch-deck-draft.md</code></div>
+        <div class="item"><code>courtpath-landing-page-copy.md</code></div>
+        <div class="item"><code>courtpath-app-prototype.html</code></div>
+      </div>
+    </section>
+
+    <p class="note">Hosting note: once this file and any linked assets are placed on GitHub Pages, Netlify, or a similar static host, you will have a real public URL to send around. For a fully polished public version, the next improvement would be embedding selected screenshots or turning the prototype story into a more polished product walkthrough.</p>
+  </div>
+  <script>
+    (function(){
+      const btn=document.querySelector('[data-theme-toggle]');
+      const root=document.documentElement;
+      let mode=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+      root.setAttribute('data-theme',mode);
+      btn.addEventListener('click',()=>{mode=mode==='dark'?'light':'dark';root.setAttribute('data-theme',mode);});
+    })();
+  </script>
+</body>
+</html>
