@@ -3,103 +3,805 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CourtPath Public Review Site</title>
+  <title>CourtPath Landing Page</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #f7f6f2;
-      --surface: #fbfbf9;
-      --surface-2: #f1ede8;
-      --text: #28251d;
-      --muted: #6f6c66;
-      --faint: #9b978f;
-      --border: #d6d1c8;
-      --primary: #0f6d70;
-      --primary-soft: #dae8e6;
-      --radius: 20px;
-      --shadow: 0 12px 30px rgba(40, 37, 29, 0.08);
+    :root, [data-theme="light"] {
+      --font-display: 'Instrument Serif', Georgia, serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+      --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.2rem);
+      --text-2xl: clamp(2rem, 1.2rem + 2.5vw, 3.8rem);
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+      --space-20: 5rem;
+      --radius-sm: 0.5rem;
+      --radius-md: 0.75rem;
+      --radius-lg: 1rem;
+      --radius-xl: 1.25rem;
+      --radius-full: 9999px;
+      --color-bg: #f7f6f2;
+      --color-surface: #fbfaf7;
+      --color-surface-2: #ffffff;
+      --color-surface-offset: #efebe4;
+      --color-border: #d7d2c9;
+      --color-divider: #e1ddd6;
+      --color-text: #242018;
+      --color-text-muted: #6d685f;
+      --color-text-faint: #9b968e;
+      --color-text-inverse: #f8f6f2;
+      --color-primary: #0b676d;
+      --color-primary-hover: #0c5257;
+      --color-primary-soft: #d8e8e6;
+      --color-success: #437a22;
+      --color-warning: #99621d;
+      --color-danger: #9a3159;
+      --shadow-sm: 0 2px 10px rgba(30, 24, 15, 0.05);
+      --shadow-md: 0 18px 45px rgba(30, 24, 15, 0.08);
+      --shadow-lg: 0 30px 80px rgba(30, 24, 15, 0.12);
+      --content: 1180px;
+      --content-narrow: 860px;
+    }
+    [data-theme="dark"] {
+      --color-bg: #171614;
+      --color-surface: #1d1b19;
+      --color-surface-2: #252320;
+      --color-surface-offset: #201e1b;
+      --color-border: #3a3732;
+      --color-divider: #2d2a26;
+      --color-text: #d7d2cb;
+      --color-text-muted: #aaa39a;
+      --color-text-faint: #7f796f;
+      --color-text-inverse: #161411;
+      --color-primary: #5aa1a8;
+      --color-primary-hover: #74b7bd;
+      --color-primary-soft: #273838;
+      --color-success: #78ac5d;
+      --color-warning: #d0a15b;
+      --color-danger: #de7fa6;
+      --shadow-sm: 0 2px 10px rgba(0,0,0,0.22);
+      --shadow-md: 0 18px 45px rgba(0,0,0,0.3);
+      --shadow-lg: 0 30px 80px rgba(0,0,0,0.4);
     }
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: var(--text); background: var(--bg); }
-    a { color: inherit; }
-    .container { max-width: 1180px; margin: 0 auto; padding: 24px; }
-    .hero, .card, .story, .check, .bundle { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
-    .hero { padding: 32px; display: grid; grid-template-columns: 1.3fr 0.9fr; gap: 20px; }
-    .eyebrow { color: var(--faint); text-transform: uppercase; letter-spacing: .08em; font-size: 12px; font-weight: 700; }
-    h1 { margin: 8px 0 14px; font-size: clamp(2.2rem, 5vw, 4.6rem); line-height: 0.95; font-family: Georgia, 'Times New Roman', serif; max-width: 8ch; }
-    h2 { margin: 0 0 12px; font-size: 1.7rem; }
-    p { color: var(--muted); line-height: 1.6; }
-    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
-    .btn, .link-pill {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      border-radius: 999px; padding: 12px 16px; text-decoration: none; font-weight: 600;
-      border: 1px solid var(--border); background: white;
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      line-height: 1.6;
+      color: var(--color-text);
+      background:
+        radial-gradient(circle at top right, color-mix(in srgb, var(--color-primary-soft) 85%, transparent) 0, transparent 28%),
+        linear-gradient(180deg, var(--color-bg), color-mix(in srgb, var(--color-bg) 88%, var(--color-surface-offset)) 100%);
     }
-    .btn.primary { background: var(--primary); color: white; border-color: transparent; }
-    .grid { display: grid; gap: 16px; margin-top: 18px; }
-    .grid.two { grid-template-columns: 1.1fr 0.9fr; }
-    .grid.three { grid-template-columns: repeat(3, 1fr); }
-    .card, .story, .bundle { padding: 22px; }
-    .kpi { font-size: 2rem; font-weight: 700; margin: 0 0 6px; }
-    .item, .bundle-item {
-      padding: 14px 16px; border: 1px solid var(--border); border-radius: 16px; background: white; margin-top: 10px;
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; max-width: 100%; }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    .skip-link {
+      position: absolute; left: 1rem; top: -3rem; background: var(--color-primary); color: var(--color-text-inverse); padding: .75rem 1rem; border-radius: var(--radius-md); z-index: 100;
     }
-    .item strong, .bundle-item strong { display: inline; }
-    .sectionHead { margin: 22px 0 10px; }
-    .check { padding: 14px; background: var(--surface-2); }
-    .file-link { color: var(--primary); text-decoration: none; font-weight: 600; word-break: break-word; }
-    .note { margin-top: 10px; color: var(--faint); font-size: 14px; }
-    code.inline { background: var(--surface-2); padding: 3px 8px; border-radius: 999px; }
-    @media (max-width: 900px) {
-      .hero, .grid.two, .grid.three { grid-template-columns: 1fr; }
-      .container { padding: 16px; }
+    .skip-link:focus { top: 1rem; }
+    .site-header {
+      position: sticky; top: 0; z-index: 40; backdrop-filter: blur(16px);
+      background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+      border-bottom: 1px solid var(--color-divider);
+    }
+    .header-inner, .section-inner, .footer-inner, .modal-card, .drawer-card {
+      width: min(calc(100% - 2rem), var(--content)); margin: 0 auto;
+    }
+    .header-inner {
+      min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
+    }
+    .brand {
+      display: flex; align-items: center; gap: .9rem; font-weight: 800;
+    }
+    .brand-mark {
+      width: 42px; height: 42px; border-radius: 14px; background: var(--color-primary-soft); color: var(--color-primary); display: grid; place-items: center;
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-primary) 16%, transparent);
+    }
+    .nav-links { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+    .nav-link, .ghost-btn, .chip-btn {
+      min-height: 44px; border-radius: var(--radius-full); padding: 0 1rem; border: 1px solid transparent; background: transparent; color: var(--color-text-muted);
+      transition: .18s ease;
+    }
+    .nav-link:hover, .ghost-btn:hover, .chip-btn:hover { background: var(--color-surface); color: var(--color-text); border-color: var(--color-border); }
+    .header-actions { display: flex; align-items: center; gap: .75rem; }
+    .primary-btn, .secondary-btn {
+      min-height: 48px; border-radius: var(--radius-full); padding: 0 1.15rem; border: 1px solid var(--color-border); transition: .18s ease;
+    }
+    .primary-btn { background: var(--color-primary); color: var(--color-text-inverse); border-color: var(--color-primary); }
+    .primary-btn:hover { background: var(--color-primary-hover); border-color: var(--color-primary-hover); }
+    .secondary-btn { background: var(--color-surface); color: var(--color-text); }
+    .secondary-btn:hover { background: var(--color-surface-2); }
+    .icon-btn {
+      width: 46px; height: 46px; border-radius: 999px; border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text);
+      display: grid; place-items: center;
+    }
+    main { overflow-x: clip; }
+    section { padding: clamp(3rem, 7vw, 6rem) 0; }
+    .hero { padding-top: clamp(2.5rem, 5vw, 4.5rem); }
+    .hero-grid, .trust-grid, .problem-grid, .flow-grid, .audience-grid, .feature-grid, .cta-grid {
+      display: grid; gap: var(--space-6);
+    }
+    .hero-grid { grid-template-columns: 1.15fr .85fr; align-items: stretch; }
+    .hero-card, .panel, .feature, .trust-item, .audience-card, .step-card, .problem-card, .cta-card, .form-card, .pilot-card, .timeline-card {
+      background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-sm);
+    }
+    .hero-copy { padding: clamp(1.5rem, 4vw, 3rem); display: grid; gap: var(--space-5); }
+    .eyebrow, .tiny-label {
+      font-size: var(--text-xs); text-transform: uppercase; letter-spacing: .1em; color: var(--color-text-muted); font-weight: 700;
+    }
+    h1, h2, h3 { margin: 0; line-height: 1.06; }
+    h1 { font-family: var(--font-display); font-size: var(--text-2xl); max-width: 11ch; }
+    h2 { font-family: var(--font-display); font-size: var(--text-xl); max-width: 16ch; }
+    h3 { font-size: 1.08rem; }
+    .lede { color: var(--color-text-muted); max-width: 60ch; }
+    .hero-actions { display: flex; gap: .85rem; flex-wrap: wrap; }
+    .hero-micro { color: var(--color-text-muted); font-size: var(--text-sm); }
+    .hero-side {
+      padding: clamp(1.25rem, 3vw, 2rem); display: grid; gap: var(--space-4);
+      background:
+        linear-gradient(180deg, color-mix(in srgb, var(--color-surface-2) 94%, transparent), color-mix(in srgb, var(--color-surface) 94%, transparent));
+    }
+    .status-pill, .source-chip, .risk-chip {
+      display: inline-flex; align-items: center; gap: .45rem; padding: .45rem .8rem; border-radius: var(--radius-full); font-size: var(--text-sm);
+      width: fit-content; border: 1px solid var(--color-border); background: var(--color-surface-2);
+    }
+    .status-pill { background: var(--color-primary-soft); border-color: transparent; color: var(--color-primary); font-weight: 700; }
+    .summary-stack, .metric-list, .mini-queue, .bullet-stack, .step-stack { display: grid; gap: .85rem; }
+    .summary-row, .mini-item, .feature, .trust-item, .audience-card, .step-card, .problem-card, .pilot-card {
+      padding: 1rem 1.05rem;
+    }
+    .summary-row {
+      display: flex; justify-content: space-between; gap: 1rem; align-items: flex-start; background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: var(--radius-lg);
+    }
+    .summary-row strong, .mini-item strong, .feature strong, .step-card strong { display: block; }
+    .muted { color: var(--color-text-muted); }
+    .section-head {
+      display: flex; align-items: end; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-6);
+    }
+    .section-head p { max-width: 62ch; margin: 0; color: var(--color-text-muted); }
+    .trust-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .trust-item { display: grid; gap: .5rem; }
+    .problem-grid { grid-template-columns: 1.1fr .9fr; align-items: start; }
+    .problem-card { display: grid; gap: 1rem; }
+    .bullet-stack { padding-left: 1rem; }
+    .bullet-stack li { margin-bottom: .65rem; color: var(--color-text-muted); }
+    .flow-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .step-card { position: relative; display: grid; gap: .7rem; min-height: 220px; }
+    .step-num {
+      width: 42px; height: 42px; border-radius: 999px; display: grid; place-items: center; background: var(--color-primary-soft); color: var(--color-primary); font-weight: 800;
+    }
+    .audience-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .audience-card { display: grid; gap: .7rem; }
+    .feature-grid { grid-template-columns: repeat(5, minmax(0,1fr)); }
+    .feature { display: grid; gap: .7rem; min-height: 210px; }
+    .feature-icon, .audience-icon, .trust-icon, .problem-icon {
+      width: 2.4rem; height: 2.4rem; border-radius: .9rem; background: var(--color-primary-soft); color: var(--color-primary); display: grid; place-items: center;
+    }
+    .pilot-band {
+      padding: 1rem 1.2rem; border: 1px solid var(--color-border); border-radius: var(--radius-xl); background: linear-gradient(135deg, color-mix(in srgb, var(--color-primary-soft) 65%, var(--color-surface-2)), var(--color-surface));
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: var(--space-6);
+    }
+    .cta-grid { grid-template-columns: 1fr .92fr; align-items: start; }
+    .cta-card, .form-card { padding: clamp(1.2rem, 3vw, 2rem); }
+    .form-card form { display: grid; gap: 1rem; }
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    label { display: grid; gap: .45rem; font-size: var(--text-sm); font-weight: 600; }
+    input, select, textarea {
+      width: 100%; min-height: 48px; border-radius: var(--radius-md); border: 1px solid var(--color-border); background: var(--color-surface-2); color: var(--color-text); padding: .9rem 1rem;
+    }
+    textarea { min-height: 112px; resize: vertical; }
+    .inline-trust { display: flex; flex-wrap: wrap; gap: .6rem; }
+    .drawer, .modal {
+      position: fixed; inset: 0; background: rgba(19, 17, 14, 0.5); backdrop-filter: blur(8px); opacity: 0; pointer-events: none; transition: .2s ease; z-index: 80;
+    }
+    .drawer.open, .modal.open { opacity: 1; pointer-events: auto; }
+    .drawer { display: flex; justify-content: flex-end; }
+    .drawer-card {
+      width: min(100%, 500px); height: 100%; margin: 0 0 0 auto; background: var(--color-bg); border-left: 1px solid var(--color-border); padding: 1.25rem; overflow-y: auto;
+      transform: translateX(24px); transition: .22s ease;
+    }
+    .drawer.open .drawer-card { transform: translateX(0); }
+    .modal { display: grid; place-items: center; padding: 1rem; }
+    .modal-card {
+      background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: 1.25rem; box-shadow: var(--shadow-lg); width: min(calc(100% - 2rem), 760px);
+      transform: translateY(10px); transition: .2s ease;
+    }
+    .modal.open .modal-card { transform: translateY(0); }
+    .modal-head, .drawer-head { display: flex; justify-content: space-between; gap: 1rem; align-items: start; margin-bottom: 1rem; }
+    .close-btn {
+      width: 42px; height: 42px; border-radius: 999px; border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text);
+    }
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .detail-block {
+      border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1rem; background: var(--color-surface);
+    }
+    .clickable-card { cursor: pointer; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+    .clickable-card:hover, .clickable-card:focus-visible { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: color-mix(in srgb, var(--color-primary) 30%, var(--color-border)); outline: none; }
+    .timeline-card { padding: 1.1rem; display: grid; gap: 1rem; }
+    .timeline-item {
+      display: grid; grid-template-columns: 18px 1fr; gap: .9rem;
+    }
+    .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--color-primary); margin-top: .35rem; box-shadow: 0 0 0 4px var(--color-primary-soft); }
+    .footer {
+      padding: 2rem 0 3rem; border-top: 1px solid var(--color-divider);
+    }
+    .footer-inner { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; color: var(--color-text-muted); }
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .45s ease, transform .45s ease; }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
+    .mobile-menu-btn { display: none; }
+    .mobile-drawer-nav { display: none; }
+    @media (max-width: 1120px) {
+      .feature-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+      .flow-grid { grid-template-columns: 1fr; }
+      .hero-grid, .problem-grid, .cta-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 860px) {
+      .nav-links, .header-actions .secondary-btn, .header-actions .nav-link { display: none; }
+      .mobile-menu-btn { display: grid; }
+      .trust-grid, .audience-grid, .feature-grid, .field-grid, .detail-grid { grid-template-columns: 1fr; }
+      .section-head { align-items: start; flex-direction: column; }
+      .pilot-band, .footer-inner { flex-direction: column; align-items: start; }
+      .mobile-drawer-nav { display: grid; gap: .6rem; margin-top: 1rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <section class="hero">
-      <div>
-        <div class="eyebrow">CourtPath public review</div>
-        <h1>Review the product, workflow, and source materials in one place.</h1>
-        <p>This public review page presents the CourtPath prototype and the core project documents together so a reviewer can understand the concept, the current user flow, and the implementation package without searching across scattered files.</p>
-        <div class="actions">
-          <a class="btn primary" href="courtpath-app-prototype.html" target="_blank" rel="noopener noreferrer">Open working prototype</a>
-          <a class="btn" href="courtpath-prd.md" target="_blank" rel="noopener noreferrer">Open PRD</a>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#top" class="brand" aria-label="CourtPath home">
+        <div class="brand-mark">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+            <path d="M4 18h16"></path>
+            <path d="M6 18V9l6-4 6 4v9"></path>
+            <path d="M9.5 18v-5h5v5"></path>
+          </svg>
+        </div>
+        <div>
+          <div>CourtPath</div>
+          <div class="tiny-label">Trust-centered court workflow</div>
+        </div>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a class="nav-link" href="#trust">Trust model</a>
+        <a class="nav-link" href="#problem">Why now</a>
+        <a class="nav-link" href="#how-it-works">How it works</a>
+        <a class="nav-link" href="#audience">Audience</a>
+        <a class="nav-link" href="#features">Features</a>
+        <a class="nav-link" href="#pilot">Pilot</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn" data-theme-toggle aria-label="Toggle color theme">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
+        </button>
+        <button class="secondary-btn" data-open-drawer="product-demo">See product walkthrough</button>
+        <a class="primary-btn" href="#join">Join the pilot</a>
+        <button class="icon-btn mobile-menu-btn" data-open-drawer="mobile-menu" aria-label="Open navigation menu">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="section-inner hero-grid">
+        <div class="hero-card hero-copy reveal">
+          <div class="status-pill">Illinois-first pilot-ready workflow</div>
+          <div class="eyebrow">Court guidance that helps people get organized before they fall behind</div>
+          <h1>Bring order to court-related work before confusion turns into missed steps.</h1>
+          <p class="lede">CourtPath helps individuals, families, small businesses, and support organizations turn stressful court-related work into clearer next steps, organized matter records, document readiness, and human-help routing when risk rises.</p>
+          <div class="hero-actions">
+            <a class="primary-btn" href="#join">Join the pilot</a>
+            <button class="secondary-btn" data-open-modal="hero-why">Why CourtPath works</button>
+            <button class="secondary-btn" data-open-drawer="product-demo">Open interactive product brief</button>
+          </div>
+          <div class="hero-micro">See how CourtPath can support court workflows without replacing human legal judgment.</div>
+          <div class="inline-trust">
+            <span class="source-chip">Official-source aware</span>
+            <span class="source-chip">Matter-centered</span>
+            <span class="source-chip">Human-help escalation</span>
+          </div>
+        </div>
+        <aside class="panel hero-side reveal" aria-label="Matter preview">
+          <div class="tiny-label">Interactive preview</div>
+          <h2>A clearer path through one matter workspace</h2>
+          <p class="muted">The landing page is wired to show the same product story promised in the PRD, wireframes, roadmap, and prototype: intake, workspace, filing readiness, alerts, and help routing.</p>
+          <div class="summary-stack">
+            <button class="summary-row clickable-card" data-open-modal="matter-preview">
+              <div>
+                <strong>1. Start with the situation in plain language</strong>
+                <div class="muted">Short guided intake creates one organized matter record.</div>
+              </div>
+              <span class="risk-chip">Open</span>
+            </button>
+            <button class="summary-row clickable-card" data-open-modal="workspace-preview">
+              <div>
+                <strong>2. See one next action, deadlines, files, and activity</strong>
+                <div class="muted">No black-box answer stream, just a visible workflow.</div>
+              </div>
+              <span class="risk-chip">Open</span>
+            </button>
+            <button class="summary-row clickable-card" data-open-modal="routing-preview">
+              <div>
+                <strong>3. Route to human help when risk rises</strong>
+                <div class="muted">Escalation is part of the product, not an afterthought.</div>
+              </div>
+              <span class="risk-chip">Open</span>
+            </button>
+          </div>
+          <button class="primary-btn" data-open-drawer="product-demo">Launch product walkthrough</button>
+        </aside>
+      </div>
+    </section>
+
+    <section id="trust">
+      <div class="section-inner">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Built for trust, not black-box answers</div>
+            <h2>Guided workflows, visible sources, and safer escalation.</h2>
+          </div>
+          <p>CourtPath is designed around guided workflows, visible next steps, source-aware records, and help escalation when the matter needs human attention.</p>
+        </div>
+        <div class="trust-grid">
+          <button class="trust-item clickable-card reveal" data-open-modal="trust-official">
+            <div class="trust-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 4v5c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V7l7-4z"></path></svg>
+            </div>
+            <strong>Official material is visibly distinct</strong>
+            <div class="muted">Court records, guided help, uploads, and generated explanations should never blur together.</div>
+          </button>
+          <button class="trust-item clickable-card reveal" data-open-modal="trust-next-action">
+            <div class="trust-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
+            </div>
+            <strong>One primary next action reduces overwhelm</strong>
+            <div class="muted">Users should always know what matters now instead of sorting through disconnected legal content.</div>
+          </button>
+          <button class="trust-item clickable-card reveal" data-open-modal="trust-escalation">
+            <div class="trust-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 9v4"></path><path d="M12 17h.01"></path><path d="M10.3 3.2 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.2a2 2 0 0 0-3.4 0z"></path></svg>
+            </div>
+            <strong>Human help appears before failure</strong>
+            <div class="muted">Higher-risk matters should trigger referral and support logic early enough to actually help.</div>
+          </button>
         </div>
       </div>
-      <div class="card">
-        <div class="eyebrow">Review focus</div>
-        <h2>What to look at first</h2>
-        <p>Start with the interactive demo, then review the product requirements and supporting business and launch materials.</p>
-        <div class="grid three" style="margin-top: 12px;">
-          <div><div class="kpi">01</div><p>Prototype flow</p></div>
-          <div><div class="kpi">02</div><p>Product scope</p></div>
-          <div><div class="kpi">03</div><p>Launch narrative</p></div>
+    </section>
+
+    <section id="problem">
+      <div class="section-inner problem-grid">
+        <div class="problem-card reveal">
+          <div class="eyebrow">When court processes feel impossible, people fall behind fast</div>
+          <h2>Most people do not start with the right form, the right sequence, or a clean timeline.</h2>
+          <p class="muted">They start with stress, scattered paperwork, unclear deadlines, and too many places to search for answers. CourtPath is built for that reality.</p>
+          <ul class="bullet-stack">
+            <li>People need structure before they need sophistication.</li>
+            <li>Deadline pressure makes disconnected information harder to use.</li>
+            <li>Support organizations need cleaner intake, handoff, and review workflows.</li>
+          </ul>
+          <button class="secondary-btn" data-open-modal="problem-detail">See the product problem frame</button>
+        </div>
+        <div class="timeline-card reveal">
+          <div class="tiny-label">Why structure matters</div>
+          <div class="timeline-item">
+            <div class="dot"></div>
+            <div><strong>Paperwork arrives</strong><div class="muted">The person does not yet know what is official, urgent, or optional.</div></div>
+          </div>
+          <div class="timeline-item">
+            <div class="dot"></div>
+            <div><strong>Deadlines stay unclear</strong><div class="muted">Missed steps often come from disorganization, not lack of effort.</div></div>
+          </div>
+          <div class="timeline-item">
+            <div class="dot"></div>
+            <div><strong>Search fragments the process</strong><div class="muted">Forms, portals, instructions, and support options live in different places.</div></div>
+          </div>
+          <div class="timeline-item">
+            <div class="dot"></div>
+            <div><strong>Higher risk goes unseen</strong><div class="muted">Users need visible off-ramps to legal aid, attorneys, or staff review.</div></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <div class="sectionHead"><h2 id="reviewer-guide">Reviewer guide</h2></div>
-    <section class="story">
-      <div class="check">
-        <div class="item"><strong>General reviewer:</strong> <a class="file-link" href="courtpath-app-prototype.html" target="_blank" rel="noopener noreferrer">Start with the prototype</a>, then <a class="file-link" href="courtpath-prd.md" target="_blank" rel="noopener noreferrer">the PRD</a>.</div>
-        <div class="item"><strong>Business reviewer:</strong> <a class="file-link" href="courtpath-app-prototype.html" target="_blank" rel="noopener noreferrer">Prototype</a>, <a class="file-link" href="courtpath-pitch-deck-draft.md" target="_blank" rel="noopener noreferrer">pitch draft</a>, <a class="file-link" href="courtpath-landing-page-copy.md" target="_blank" rel="noopener noreferrer">landing copy</a>, then <a class="file-link" href="courtpath-prd.md" target="_blank" rel="noopener noreferrer">PRD</a>.</div>
-        <div class="item"><strong>Technical reviewer:</strong> <a class="file-link" href="courtpath-app-prototype.html" target="_blank" rel="noopener noreferrer">Prototype</a>, <a class="file-link" href="courtpath-prd.md" target="_blank" rel="noopener noreferrer">PRD</a>, then <a class="file-link" href="courtpath-master-index.md" target="_blank" rel="noopener noreferrer">master index</a>.</div>
-        <div class="item"><strong>Short on time:</strong> Spend 10 minutes on the <a class="file-link" href="courtpath-app-prototype.html" target="_blank" rel="noopener noreferrer">prototype</a> and <a class="file-link" href="courtpath-prd.md" target="_blank" rel="noopener noreferrer">PRD</a> only.</div>
+    <section id="how-it-works">
+      <div class="section-inner">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">How it works</div>
+            <h2>A clearer path through court-related work.</h2>
+          </div>
+          <p>The path to value should be easy to scan: start with plain language, create one matter workspace, then follow guided next steps toward readiness and help routing.</p>
+        </div>
+        <div class="flow-grid">
+          <button class="step-card clickable-card reveal" data-open-modal="step-1">
+            <div class="step-num">1</div>
+            <strong>Start with your situation in plain language</strong>
+            <div class="muted">The system gathers issue type, location, urgency, and key facts without forcing legal jargon first.</div>
+          </button>
+          <button class="step-card clickable-card reveal" data-open-modal="step-2">
+            <div class="step-num">2</div>
+            <strong>Build one organized matter workspace</strong>
+            <div class="muted">Tasks, files, timeline events, next-step logic, and risk state live in one operational home.</div>
+          </button>
+          <button class="step-card clickable-card reveal" data-open-modal="step-3">
+            <div class="step-num">3</div>
+            <strong>Move toward filing readiness and human-help routing</strong>
+            <div class="muted">The product guides document readiness, status checks, and support escalation when risk increases.</div>
+          </button>
+        </div>
       </div>
     </section>
 
-    <div class="sectionHead"><h2 id="source-file-bundle">Source file bundle</h2></div>
-    <section class="bundle">
-      <p>You should still keep your original source files. This public review page is the presentation layer, but the files below remain the underlying project assets.</p>
-      <div class="bundle-item"><a class="file-link" href="courtpath-master-index.md" target="_blank" rel="noopener noreferrer">courtpath-master-index.md</a></div>
-      <div class="bundle-item"><a class="file-link" href="courtpath-prd.md" target="_blank" rel="noopener noreferrer">courtpath-prd.md</a></div>
-      <div class="bundle-item"><a class="file-link" href="courtpath-pitch-deck-draft.md" target="_blank" rel="noopener noreferrer">courtpath-pitch-deck-draft.md</a></div>
-      <div class="bundle-item"><a class="file-link" href="courtpath-landing-page-copy.md" target="_blank" rel="noopener noreferrer">courtpath-landing-page-copy.md</a></div>
-      <div class="bundle-item"><a class="file-link" href="courtpath-app-prototype.html" target="_blank" rel="noopener noreferrer">courtpath-app-prototype.html</a></div>
+    <section id="audience">
+      <div class="section-inner">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Audience</div>
+            <h2>Built for the public and the professionals who support them.</h2>
+          </div>
+          <p>CourtPath is designed for self-represented users, families, and small businesses, and also for nonprofits, legal-service organizations, intake teams, and support staff.</p>
+        </div>
+        <div class="audience-grid">
+          <button class="audience-card clickable-card reveal" data-open-modal="audience-public">
+            <div class="audience-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21a8 8 0 0 0-16 0"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
+            <strong>Public users</strong>
+            <div class="muted">Self-represented individuals, families, and small business owners who need a safer way to get organized.</div>
+          </button>
+          <button class="audience-card clickable-card reveal" data-open-modal="audience-pro">
+            <div class="audience-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </div>
+            <strong>Professional and partner teams</strong>
+            <div class="muted">Organizations that need cleaner intake, matter review, referrals, and structured support workflows.</div>
+          </button>
+        </div>
+      </div>
     </section>
 
-    <p class="note">Hosting note: once this file and the linked assets are placed on GitHub Pages, Netlify, or another static host, the links above will open as normal public files.</p>
+    <section id="features">
+      <div class="section-inner">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Feature highlights</div>
+            <h2>Core workflows that make the product operational, not just informational.</h2>
+          </div>
+          <p>These feature blocks follow the product roadmap and prototype: intake, matter dashboard, timeline, documents, filing readiness, alerts, and help routing.</p>
+        </div>
+        <div class="feature-grid">
+          <button class="feature clickable-card reveal" data-open-modal="feature-intake">
+            <div class="feature-icon">1</div>
+            <strong>Guided intake</strong>
+            <div class="muted">Start with the user’s situation, not legal jargon.</div>
+          </button>
+          <button class="feature clickable-card reveal" data-open-modal="feature-dashboard">
+            <div class="feature-icon">2</div>
+            <strong>Matter dashboard</strong>
+            <div class="muted">Deadlines, tasks, status, and progress visibility in one workspace.</div>
+          </button>
+          <button class="feature clickable-card reveal" data-open-modal="feature-timeline">
+            <div class="feature-icon">3</div>
+            <strong>Timeline and documents</strong>
+            <div class="muted">Events, filings, and paperwork become organized and readable.</div>
+          </button>
+          <button class="feature clickable-card reveal" data-open-modal="feature-filing">
+            <div class="feature-icon">4</div>
+            <strong>Filing readiness</strong>
+            <div class="muted">Checklist-based support for what is ready, missing, or blocked.</div>
+          </button>
+          <button class="feature clickable-card reveal" data-open-modal="feature-routing">
+            <div class="feature-icon">5</div>
+            <strong>Human-help escalation</strong>
+            <div class="muted">Route to help when complexity, urgency, or uncertainty increases.</div>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="pilot">
+      <div class="section-inner">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Pilot positioning</div>
+            <h2>Designed to start narrow, prove trust, and expand deliberately.</h2>
+          </div>
+          <p>The strongest first release is Illinois-first and workflow-first, with one production-grade matter path rather than broad national coverage.</p>
+        </div>
+        <div class="pilot-band reveal">
+          <div>
+            <strong>Recommended pilot shape</strong>
+            <div class="muted">Public intake, matter creation, dashboard, timeline, document organization, filing-readiness basics, alerts, and help options.</div>
+          </div>
+          <button class="primary-btn" data-open-modal="pilot-scope">Open pilot scope</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="join">
+      <div class="section-inner cta-grid">
+        <div class="cta-card reveal">
+          <div class="eyebrow">Bring order to the next court-related matter before it gets harder</div>
+          <h2>Join the pilot.</h2>
+          <p class="muted">For early users, partner organizations, and teams exploring structured court-workflow support.</p>
+          <div class="mini-queue">
+            <div class="mini-item"><strong>Who this is for</strong><div class="muted">Individuals, organizations, legal-service teams, and referral partners.</div></div>
+            <div class="mini-item"><strong>What happens next</strong><div class="muted">The form captures basic interest, then opens a confirmation state with the pilot-fit path.</div></div>
+            <div class="mini-item"><strong>Why the form stays short</strong><div class="muted">Only the fields needed for the primary conversion action are required.</div></div>
+          </div>
+        </div>
+        <div class="form-card reveal">
+          <form id="pilot-form">
+            <div class="field-grid">
+              <label>
+                Name
+                <input type="text" name="name" placeholder="Your name" required />
+              </label>
+              <label>
+                Email
+                <input type="email" name="email" placeholder="you@example.com" required />
+              </label>
+            </div>
+            <label>
+              I am interested as
+              <select name="interest" required>
+                <option value="">Select one</option>
+                <option>Individual</option>
+                <option>Organization</option>
+                <option>Legal-service team</option>
+                <option>Partner</option>
+              </select>
+            </label>
+            <label>
+              Optional context
+              <textarea name="context" placeholder="What kind of court-workflow support are you exploring?"></textarea>
+            </label>
+            <div class="inline-trust">
+              <span class="source-chip">Short form</span>
+              <span class="source-chip">Pilot intent only</span>
+              <span class="source-chip">No legal advice promised</span>
+            </div>
+            <button class="primary-btn" type="submit">Join the pilot</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© CourtPath concept page</div>
+      <div>Built around trust, workflow clarity, and escalation-ready court support.</div>
+    </div>
+  </footer>
+
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-card" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+      <div class="drawer-head">
+        <div>
+          <div class="eyebrow" id="drawer-kicker">Interactive brief</div>
+          <h2 id="drawer-title">Product walkthrough</h2>
+        </div>
+        <button class="close-btn" data-close-drawer aria-label="Close drawer">×</button>
+      </div>
+      <div id="drawer-body"></div>
+    </div>
   </div>
+
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-head">
+        <div>
+          <div class="eyebrow" id="modal-kicker">Detail</div>
+          <h2 id="modal-title">More detail</h2>
+        </div>
+        <button class="close-btn" data-close-modal aria-label="Close modal">×</button>
+      </div>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script>
+    const root = document.documentElement;
+    const modal = document.getElementById('modal');
+    const drawer = document.getElementById('drawer');
+    const modalTitle = document.getElementById('modal-title');
+    const modalKicker = document.getElementById('modal-kicker');
+    const modalBody = document.getElementById('modal-body');
+    const drawerTitle = document.getElementById('drawer-title');
+    const drawerKicker = document.getElementById('drawer-kicker');
+    const drawerBody = document.getElementById('drawer-body');
+
+    const modalContent = {
+      'hero-why': {
+        kicker: 'Why it works',
+        title: 'A landing page built around workflow clarity',
+        body: `
+          <div class="detail-grid">
+            <div class="detail-block"><strong>Clear value proposition</strong><p class="muted">The page leads with one benefit-led headline, one primary CTA, and a short explanation of the trust boundary.</p></div>
+            <div class="detail-block"><strong>Trust near conversion</strong><p class="muted">Trust signals sit close to the CTA instead of being buried in the footer.</p></div>
+            <div class="detail-block"><strong>Audience relevance</strong><p class="muted">The copy explicitly addresses both public users and the professionals who support them.</p></div>
+            <div class="detail-block"><strong>Clickable depth</strong><p class="muted">Each major section opens deeper product logic so the page feels wired, not static.</p></div>
+          </div>`
+      },
+      'matter-preview': {
+        kicker: 'Step 1', title: 'Plain-language intake creates the matter', body: `<p class="muted">The first interaction should classify the situation, capture county and court context, surface urgency, and create a matter with a visible next action.</p>`
+      },
+      'workspace-preview': {
+        kicker: 'Step 2', title: 'One workspace organizes the work', body: `<p class="muted">The matter workspace should show timeline, documents, tasks, next-step guidance, source visibility, and help options in one operational view.</p>`
+      },
+      'routing-preview': {
+        kicker: 'Step 3', title: 'Escalation is part of the product', body: `<p class="muted">When deadlines shorten, uncertainty rises, or filings are blocked, CourtPath should recommend legal aid, limited-scope help, or staff review instead of pretending automation is enough.</p>`
+      },
+      'trust-official': {
+        kicker: 'Trust model', title: 'Official records should stay visibly distinct', body: `<p class="muted">The product should separate official court material, guided help, user uploads, professional notes, and generated explanations so users always know what kind of information they are looking at.</p>`
+      },
+      'trust-next-action': {
+        kicker: 'Trust model', title: 'One primary next action per screen', body: `<p class="muted">A stressed user should not have to search for what matters most. The page reflects the product rule that every public-facing screen should elevate one next action first.</p>`
+      },
+      'trust-escalation': {
+        kicker: 'Trust model', title: 'Human-help routing should appear early enough to matter', body: `<p class="muted">CourtPath should recommend human support when a matter becomes time-sensitive, difficult to understand, or unsafe to continue without review.</p>`
+      },
+      'problem-detail': {
+        kicker: 'Problem frame', title: 'The product is solving disorganization under pressure', body: `<p class="muted">CourtPath is not positioned as a generic legal chatbot. It is positioned as trust-centered court-workflow infrastructure that helps users understand what is happening, what comes next, and when help is needed.</p>`
+      },
+      'step-1': {
+        kicker: 'How it works', title: 'Step 1: Intake in plain language', body: `<p class="muted">The intake should guide users through problem type, location, risk, and key facts while reducing typing and preserving a mobile-friendly path.</p>`
+      },
+      'step-2': {
+        kicker: 'How it works', title: 'Step 2: Matter workspace', body: `<p class="muted">The matter becomes the system anchor. All tasks, files, alerts, source records, and next-step logic should write back to that object.</p>`
+      },
+      'step-3': {
+        kicker: 'How it works', title: 'Step 3: Readiness and routing', body: `<p class="muted">From there, the product should support timeline review, document organization, filing-readiness checks, alerts, and escalation-ready help routing.</p>`
+      },
+      'audience-public': {
+        kicker: 'Audience', title: 'Public-user path', body: `<p class="muted">The public experience should be plain-language, low-clutter, and mobile-friendly, with one clear action per screen and visible off-ramps to support.</p>`
+      },
+      'audience-pro': {
+        kicker: 'Audience', title: 'Professional-user path', body: `<p class="muted">Professional mode should reveal queues, review panels, assignments, and referral workflows without breaking the same matter-centered model.</p>`
+      },
+      'feature-intake': {
+        kicker: 'Feature', title: 'Guided intake', body: `<p class="muted">Start with the user’s situation, gather issue type and urgency, and create a matter record with status, risk, and next-step recommendations.</p>`
+      },
+      'feature-dashboard': {
+        kicker: 'Feature', title: 'Matter dashboard', body: `<p class="muted">The dashboard should show matter summary, deadlines, tasks, source indicators, recent activity, and current status in one place.</p>`
+      },
+      'feature-timeline': {
+        kicker: 'Feature', title: 'Timeline and documents', body: `<p class="muted">Users should be able to understand what happened, what filings exist, what documents are missing, and which records are verified.</p>`
+      },
+      'feature-filing': {
+        kicker: 'Feature', title: 'Filing readiness', body: `<p class="muted">The filing workflow should show completed, incomplete, and blocked items, then route rejection reasons into corrective next steps.</p>`
+      },
+      'feature-routing': {
+        kicker: 'Feature', title: 'Human-help routing', body: `<p class="muted">Referral and help options should be embedded into the product so users can hand off a clean summary instead of retelling everything from scratch.</p>`
+      },
+      'pilot-scope': {
+        kicker: 'Pilot scope', title: 'Recommended pilot structure', body: `<p class="muted">The strongest first build is Illinois-first with public account flow, intake, matter creation, workspace, timeline, documents, filing-readiness basics, alerts, and support routing.</p>`
+      }
+    };
+
+    const drawerContent = {
+      'product-demo': {
+        kicker: 'Interactive product brief',
+        title: 'What a sophisticated first release should include',
+        body: `
+          <div class="mini-queue">
+            <div class="detail-block"><strong>Landing and onboarding</strong><div class="muted">Explain what CourtPath can do, what it cannot do, and when human help is needed.</div></div>
+            <div class="detail-block"><strong>Guided intake</strong><div class="muted">Capture issue type, county, court context, urgency, and key dates.</div></div>
+            <div class="detail-block"><strong>Matter workspace</strong><div class="muted">Show one primary next action, recent activity, tasks, documents, and source summary.</div></div>
+            <div class="detail-block"><strong>Timeline and filing readiness</strong><div class="muted">Turn case history into readable events and expose what is ready, missing, or blocked.</div></div>
+            <div class="detail-block"><strong>Alerts and help routing</strong><div class="muted">Surface warnings, timestamps, and support options before the matter becomes harder.</div></div>
+          </div>`
+      },
+      'mobile-menu': {
+        kicker: 'Navigation',
+        title: 'Jump to section',
+        body: `
+          <nav class="mobile-drawer-nav" aria-label="Mobile section navigation">
+            <a class="secondary-btn" href="#trust" data-close-drawer>Trust model</a>
+            <a class="secondary-btn" href="#problem" data-close-drawer>Why now</a>
+            <a class="secondary-btn" href="#how-it-works" data-close-drawer>How it works</a>
+            <a class="secondary-btn" href="#audience" data-close-drawer>Audience</a>
+            <a class="secondary-btn" href="#features" data-close-drawer>Features</a>
+            <a class="primary-btn" href="#join" data-close-drawer>Join the pilot</a>
+          </nav>`
+      }
+    };
+
+    function openModal(key) {
+      const content = modalContent[key];
+      if (!content) return;
+      modalKicker.textContent = content.kicker;
+      modalTitle.textContent = content.title;
+      modalBody.innerHTML = content.body;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+    function closeModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+    function openDrawer(key) {
+      const content = drawerContent[key];
+      if (!content) return;
+      drawerKicker.textContent = content.kicker;
+      drawerTitle.textContent = content.title;
+      drawerBody.innerHTML = content.body;
+      drawer.classList.add('open');
+      drawer.setAttribute('aria-hidden', 'false');
+    }
+    function closeDrawer() {
+      drawer.classList.remove('open');
+      drawer.setAttribute('aria-hidden', 'true');
+    }
+
+    document.querySelectorAll('[data-open-modal]').forEach(btn => {
+      btn.addEventListener('click', () => openModal(btn.dataset.openModal));
+    });
+    document.querySelectorAll('[data-open-drawer]').forEach(btn => {
+      btn.addEventListener('click', () => openDrawer(btn.dataset.openDrawer));
+    });
+    document.querySelectorAll('[data-close-modal]').forEach(btn => btn.addEventListener('click', closeModal));
+    document.querySelectorAll('[data-close-drawer]').forEach(btn => btn.addEventListener('click', closeDrawer));
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    drawer.addEventListener('click', (e) => { if (e.target === drawer) closeDrawer(); });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { closeModal(); closeDrawer(); }
+    });
+
+    const themeToggle = document.querySelector('[data-theme-toggle]');
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    root.setAttribute('data-theme', systemDark ? 'dark' : 'light');
+    themeToggle.addEventListener('click', () => {
+      root.setAttribute('data-theme', root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('in-view');
+      });
+    }, { threshold: 0.14 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    const form = document.getElementById('pilot-form');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const name = data.get('name') || 'there';
+      const interest = data.get('interest') || 'pilot';
+      openModal('hero-why');
+      modalKicker.textContent = 'Pilot request received';
+      modalTitle.textContent = 'Thanks, ' + name + '.';
+      modalBody.innerHTML = `<p class="muted">This prototype form now behaves like a real conversion state. It confirms the request and reflects the selected interest path: <strong>${interest}</strong>.</p><div class="detail-block"><strong>Next step</strong><div class="muted">A production version would route this submission into a pilot intake queue with role-aware follow-up.</div></div>`;
+      form.reset();
+      closeDrawer();
+    });
+  </script>
 </body>
 </html>
