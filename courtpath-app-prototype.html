@@ -91,7 +91,7 @@
     .split { display: grid; grid-template-columns: 1.1fr .9fr; gap: var(--space-6); }
     .table { width: 100%; border-collapse: collapse; }
     .table th, .table td { text-align: left; padding: .85rem; border-bottom: 1px solid var(--color-border); }
-    .mobile-nav { display: none; position: sticky; bottom: 0; background: color-mix(in srgb, var(--color-bg) 92%, transparent); backdrop-filter: blur(12px); border-top: 1px solid var(--color-border); padding: .6rem; grid-template-columns: repeat(5, 1fr); gap: .5rem; }
+    .mobile-nav { display: none; position: sticky; bottom: 0; background: color-mix(in srgb, var(--color-bg) 92%, transparent); backdrop-filter: blur(12px); border-top: 1px solid var(--color-border); padding: .6rem; grid-template-columns: repeat(6, 1fr); gap: .5rem; }
     .mobile-nav button { min-height: 48px; border-radius: var(--radius-lg); border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text-muted); }
     .mobile-nav button.active { color: var(--color-text); background: var(--color-surface-2); }
     .hidden-mobile { display: block; }
@@ -143,6 +143,7 @@
         <button class="nav-btn" data-screen="matter">Matter workspace <span>03</span></button>
         <button class="nav-btn" data-screen="filing">Filing readiness <span>04</span></button>
         <button class="nav-btn" data-screen="support">Help routing <span>05</span></button>
+          <button class="nav-btn" data-screen="immigration">Immigration Status &amp; Records <span>06</span></button>
       </nav>
 
       <div class="sidebar-card">
@@ -402,12 +403,56 @@
         </section>
       </div>
 
-      <nav class="mobile-nav" aria-label="Mobile">
+  
+      <section id="immigration" class="screen">
+        <div class="split">
+          <div class="card">
+            <div class="tiny">Phase 2 workflow</div>
+            <h2>Immigration Status &amp; Records</h2>
+            <p class="muted" style="margin-bottom:1rem">This module helps emigrants and family helpers figure out which official system applies, what number they need, and what follow-up step should happen next.</p>
+            <div class="tabs">
+              <button class="tab active">1. Route</button>
+              <button class="tab">2. Check</button>
+              <button class="tab">3. Save</button>
+              <button class="tab">4. Follow up</button>
+            </div>
+            <div class="task-list">
+              <div class="task done"><div class="check"></div><div><strong>Select pathway</strong><div class="muted">USCIS case status, EOIR immigration court, or CBP I-94 records.</div></div></div>
+              <div class="task"><div class="check"></div><div><strong>Confirm identifier readiness</strong><div class="muted">Receipt number, A-Number, or travel/admission details before official lookup.</div></div></div>
+              <div class="task"><div class="check"></div><div><strong>Open official source</strong><div class="muted">Launch the government source with clear trust labeling and save the result after review.</div></div></div>
+              <div class="task"><div class="check"></div><div><strong>Create follow-up reminder</strong><div class="muted">Set a re-check date, hearing prep task, or request for lawyer review.</div></div></div>
+            </div>
+          </div>
+          <div class="card assistant-box">
+            <div class="tiny">Visible investor signal</div>
+            <div class="assistant-message">
+              <strong>Why this module matters.</strong>
+              <p class="muted" style="margin-top:.4rem">CourtPath now shows an adjacent workflow for migration-related status access without claiming to replace immigration lawyers or government systems.</p>
+            </div>
+            <div class="assistant-message">
+              <strong>Official paths surfaced.</strong>
+              <p class="muted" style="margin-top:.4rem">The flow routes users to USCIS status tools, EOIR case information, and CBP I-94 access, then brings them back into CourtPath to organize notes and next actions.</p>
+            </div>
+            <div class="callout">
+              <div class="tiny">Navigation label</div>
+              <p style="margin-top:.4rem">Primary product language: <strong>Immigration Status &amp; Records</strong>. Alternate investor shorthand: Migration Flow.</p>
+            </div>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="card"><h2>USCIS path</h2><p class="muted">Guide the user to case-status lookup using the receipt number and save the last checked result.</p></div>
+          <div class="card"><h2>EOIR path</h2><p class="muted">Help the user reach immigration court case information and log hearing dates or status changes.</p></div>
+          <div class="card"><h2>I-94 path</h2><p class="muted">Support retrieval of arrival and departure records, travel history, and related reminders.</p></div>
+        </div>
+      </section>
+
+    <nav class="mobile-nav" aria-label="Mobile">
         <button class="mobile-btn active" data-screen="dashboard">Home</button>
         <button class="mobile-btn" data-screen="intake">Intake</button>
         <button class="mobile-btn" data-screen="matter">Matter</button>
         <button class="mobile-btn" data-screen="filing">Filing</button>
         <button class="mobile-btn" data-screen="support">Help</button>
+      <button class="mobile-btn" data-screen="immigration">Migration</button>
       </nav>
     </main>
   </div>
