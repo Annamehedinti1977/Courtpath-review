@@ -114,3 +114,27 @@ A PRD should include product behavior and constraints, not only feature wishes, 
 
 ## Notes for design and engineering
 The PRD should stay linked to wireframes, design exploration, and user stories so implementation stays aligned as the product evolves.[cite:333][cite:339] Acceptance criteria should be treated as pass/fail conditions for feature completion, whether they are written in simple checklist form or given/when/then format.[cite:337][cite:344]
+
+
+## Module 9 Immigration Status and Records Flow
+
+CourtPath should add a Phase 2 module focused on immigration status access, records guidance, and follow-up workflow support for emigrants and family helpers.[cite:1200][cite:1277][cite:1280][cite:1285][cite:1282] The module should help users identify whether they need the USCIS, EOIR, or CBP I-94 path, understand which identifier is required, launch the correct official source, and record next steps inside the matter workspace.[cite:1280][cite:1285][cite:1282]
+
+### User story
+
+As a user, the user wants a guided migration and immigration-status flow so they can check official case or record status, stay organized, and know what to do next without guessing which system applies.[cite:1280][cite:1285][cite:1282]
+
+### Acceptance criteria
+
+- Given the user opens Immigration Status & Records, when guided intake begins, then the system routes the user to USCIS, EOIR, or CBP I-94 based on their need.[cite:1280][cite:1285][cite:1282]
+- Given the user enters the chosen path, when the system prepares the status check, then it explains the required identifier in plain language before routing to the official source.[cite:1280][cite:1285]
+- Given the user returns from an official source, when they log the result, then the system saves notes, screenshots, latest checked date, and follow-up actions in the matter workspace.[cite:1200][cite:1285][cite:1282]
+- Given a hearing date, re-check need, or unresolved blocker exists, when the user saves the workflow, then the system can create a reminder tied to that immigration module record.[cite:1285][cite:1200]
+- Given the module is visible in product navigation, when a public or investor-facing user reviews the prototype, then an entry point labeled Immigration Status & Records or Migration Flow is clearly visible.[cite:1199][cite:1200]
+
+## Updated release sequence
+
+- MVP intake, dashboard, timeline, document vault, filing-readiness basics, alerts.
+- Pilot partner workspace, referral logic, deeper workflows, analytics.
+- Phase 2 expansion immigration status and records flow, multilingual support for this module, and module-specific reminders and document capture.[cite:1280][cite:1285][cite:1282]
+- Expansion multi-jurisdiction support, advanced document automation, richer integrations.
