@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="slides-format" content="viewport">
+  <title>CourtPath Pitch Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --color-bg: #0b1020;
+      --color-bg-deep: #060913;
+      --color-surface: #11182b;
+      --color-text: #eef3ff;
+      --color-text-secondary: #ced8ef;
+      --color-text-muted: #91a2c8;
+      --color-accent-1: #56c6ff;
+      --color-accent-2: #91f2c2;
+      --color-accent-3: #f6c768;
+      --color-glass-bg: rgba(255,255,255,0.07);
+      --color-glass-border: rgba(255,255,255,0.10);
+      --color-vignette: rgba(0,0,0,0.42);
+      --font-display: 'Instrument Serif', serif;
+      --font-body: 'Inter', sans-serif;
+    }
+  </style>
+  <style>
+    :root { --color-bg: #0b1020; --color-text: #eef3ff; --glow-color-rgb: 86,198,255; }
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{background:var(--color-bg);margin:0}
+    body{font-family:Inter,system-ui,sans-serif;color:var(--color-text);overflow:hidden;height:100vh;width:100vw}
+    .deck{width:100vw;height:100vh;position:relative}
+    .slide{position:absolute;inset:0;background:radial-gradient(circle at top right, rgba(86,198,255,.08), transparent 30%), linear-gradient(180deg,#0b1020 0%,#060913 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transform:scale(.95);transition:opacity .7s ease,transform .7s ease;pointer-events:none;overflow:hidden}
+    .slide.active{opacity:1;transform:scale(1);pointer-events:all}
+    .slide>.content{position:relative;z-index:2;width:100%;max-width:1180px;padding:clamp(1.25rem,3vw,3rem)}
+    .nav-controls{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:16px;z-index:100;background:rgba(9,14,27,.66);backdrop-filter:blur(12px);padding:10px 24px;border-radius:40px;border:1px solid rgba(255,255,255,.12);box-shadow:0 20px 40px rgba(0,0,0,.25)}
+    .nav-btn{width:42px;height:42px;border:none;background:rgba(255,255,255,.08);color:var(--color-accent-1);border-radius:50%;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .3s, transform .2s}
+    .nav-btn:hover,.nav-btn:focus-visible{background:rgba(255,255,255,.16);transform:translateY(-1px);outline:none}
+    .slide-dots{display:flex;gap:8px}.slide-dots .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.16);cursor:pointer;transition:background .3s,transform .3s}.slide-dots .dot.active{background:var(--color-accent-1);transform:scale(1.25)}
+    .slide-counter{font-size:.8rem;color:var(--color-text-muted);min-width:44px;text-align:center}
+    .reveal{opacity:0;transform:translateY(20px)}
+    .gradient-mesh{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}.blob{position:absolute;border-radius:50%;filter:blur(90px);animation:float-slow 14s ease-in-out infinite}.blob:nth-child(2){animation:float-drift 18s ease-in-out infinite}.blob:nth-child(3){animation:float-slow 22s ease-in-out infinite reverse}.blob:nth-child(4){animation:float-drift 26s ease-in-out infinite reverse}
+    @keyframes float-slow{0%{transform:translate(0,0) scale(1)}25%{transform:translate(50px,-40px) scale(1.08)}50%{transform:translate(-30px,40px) scale(.92)}75%{transform:translate(25px,25px) scale(1.04)}100%{transform:translate(0,0) scale(1)}}
+    @keyframes float-drift{0%{transform:translate(0,0) scale(1)}33%{transform:translate(-60px,-35px) scale(1.12)}66%{transform:translate(30px,40px) scale(.9)}100%{transform:translate(0,0) scale(1)}}
+    @keyframes pulseGlow{0%,100%{box-shadow:0 0 0 rgba(86,198,255,0)}50%{box-shadow:0 0 30px rgba(86,198,255,.18)}}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+    .slide::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");background-repeat:repeat;background-size:256px 256px;opacity:.03;mix-blend-mode:overlay}
+    .slide::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at center,transparent 50%,var(--color-vignette) 100%)}
+    .glass{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.10);backdrop-filter:blur(14px);box-shadow:0 20px 40px rgba(0,0,0,.18)}
+    .metric-card,.click-card,.panel{border-radius:24px}.metric-card{padding:1.2rem 1.2rem 1rem;animation:pulseGlow 6s ease-in-out infinite}.click-card{padding:1.25rem;cursor:pointer;transition:transform .25s ease,background .25s ease,border-color .25s ease,box-shadow .25s ease}.click-card:hover{transform:translateY(-4px);background:rgba(255,255,255,.1);border-color:rgba(145,242,194,.35)}
+    .panel{padding:1.2rem}
+    .section-kicker{letter-spacing:.22em;text-transform:uppercase;font-size:.78rem;color:#91a2c8}
+    .hero-mark{width:116px;height:116px;border-radius:28px;display:grid;place-items:center;margin:0 auto 1.25rem;background:linear-gradient(135deg, rgba(86,198,255,.18), rgba(145,242,194,.18));border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(10px);animation:float 3.6s ease-in-out infinite}
+    .logo-svg{width:68px;height:68px}
+    .bar-track{height:16px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}.bar-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--color-accent-1),var(--color-accent-2));width:0}
+    .mini-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:.8rem}.flow-step{padding:1rem;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);min-height:118px;position:relative}.flow-step::after{content:'→';position:absolute;right:-14px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.28);font-size:1.4rem}.flow-step:last-child::after{display:none}
+    .tag{display:inline-flex;align-items:center;gap:.45rem;padding:.45rem .75rem;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);font-size:.82rem;color:#ced8ef}
+    .data-table{width:100%;border-collapse:separate;border-spacing:0 10px}.data-table td,.data-table th{padding:.8rem .9rem;text-align:left}.data-table tbody tr{background:rgba(255,255,255,.06)}.data-table tbody tr td:first-child{border-radius:14px 0 0 14px}.data-table tbody tr td:last-child{border-radius:0 14px 14px 0}.data-table thead th{color:#91a2c8;font-size:.78rem;text-transform:uppercase;letter-spacing:.14em}
+    .mouse-spotlight{position:fixed;inset:0;z-index:99;pointer-events:none}
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:110;background:rgba(4,7,14,.66);backdrop-filter:blur(8px)}
+    .modal.active{display:flex}.modal-card{width:min(860px,92vw);max-height:84vh;overflow:auto;border-radius:28px;padding:1.4rem;background:#0e1629;border:1px solid rgba(255,255,255,.12);box-shadow:0 30px 60px rgba(0,0,0,.35)}
+    .modal-close{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.08);color:#eef3ff;cursor:pointer}
+    .deco-shape{position:absolute;border-radius:999px;background:radial-gradient(circle, rgba(86,198,255,.14), transparent 70%);filter:blur(4px);pointer-events:none;z-index:1}
+    .footer-hint{position:absolute;right:28px;top:24px;z-index:3;font-size:.76rem;color:#91a2c8;letter-spacing:.12em;text-transform:uppercase}
+    @media (max-width: 900px){.mini-flow{grid-template-columns:1fr}.flow-step::after{display:none}.slide>.content{padding:1rem 1rem 4.5rem}.nav-controls{bottom:14px;padding:8px 16px}.metric-grid,.three-grid,.two-grid,.four-grid{grid-template-columns:1fr!important}}
+    @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important}}
+  </style>
+</head>
+<body>
+<div class="mouse-spotlight"></div>
+<div class="deck">
+
+  <div class="slide active" data-slide="1">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:480px;height:480px;top:-120px;right:-80px;background:var(--color-accent-1);opacity:.16"></div>
+      <div class="blob" style="width:320px;height:320px;bottom:-100px;left:-40px;background:var(--color-accent-2);opacity:.12"></div>
+      <div class="blob" style="width:240px;height:240px;top:40%;left:16%;background:var(--color-accent-3);opacity:.1"></div>
+      <div class="blob" style="width:180px;height:180px;top:14%;left:44%;background:#7b8cff;opacity:.08"></div>
+    </div>
+    <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1"></canvas>
+    <div class="content text-center">
+      <div class="hero-mark reveal" aria-label="CourtPath logo">
+        <svg class="logo-svg" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 36C14 22.745 24.745 12 38 12H58V28H38C33.582 28 30 31.582 30 36C30 40.418 33.582 44 38 44H48V60H38C24.745 60 14 49.255 14 36Z" stroke="url(#g1)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M58 12L48 22" stroke="url(#g1)" stroke-width="6" stroke-linecap="round"/>
+          <defs><linearGradient id="g1" x1="14" y1="12" x2="58" y2="60" gradientUnits="userSpaceOnUse"><stop stop-color="#56C6FF"/><stop offset="1" stop-color="#91F2C2"/></linearGradient></defs>
+        </svg>
+      </div>
+      <p class="section-kicker reveal">Trust-centered legal navigation</p>
+      <h1 class="reveal font-display text-[clamp(3rem,6vw,5.6rem)] font-bold tracking-tight leading-[.92] bg-linear-to-br from-accent-1 via-accent-2 to-accent-3 bg-clip-text text-transparent">CourtPath</h1>
+      <p class="reveal mx-auto mt-4 max-w-[840px] text-[clamp(1.05rem,1.7vw,1.45rem)] leading-relaxed text-text-secondary">A sophisticated court-navigation and legal-workflow platform that turns a stressful court situation into a guided matter, a visible timeline, and a trusted next action.</p>
+      <div class="reveal mt-8 flex flex-wrap items-center justify-center gap-3">
+        <span class="tag">Illinois-first wedge</span>
+        <span class="tag">Public + partner workflow</span>
+        <span class="tag">Human-help escalation built in</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-slide="2">
+    <div class="gradient-mesh"><div class="blob" style="width:360px;height:360px;top:-70px;right:-60px;background:var(--color-accent-1);opacity:.08"></div><div class="blob" style="width:260px;height:260px;bottom:-70px;left:-50px;background:var(--color-accent-3);opacity:.07"></div></div>
+    <div class="content">
+      <div class="footer-hint">Problem</div>
+      <p class="section-kicker reveal">The pain</p>
+      <h2 class="reveal font-display text-[clamp(2.2rem,4.2vw,3.6rem)] leading-tight">Court problems are workflow problems before they become legal outcomes.</h2>
+      <div class="grid two-grid grid-cols-[1.1fr_.9fr] gap-6 mt-8">
+        <div class="glass panel reveal">
+          <div class="grid gap-4">
+            <div class="click-card glass" data-modal="problem-map">
+              <div class="text-sm text-text-muted">Fragmentation</div>
+              <div class="text-xl font-semibold mt-1">Forms, deadlines, websites, filing systems, and guidance live in different places.</div>
+            </div>
+            <div class="click-card glass" data-modal="problem-stakes">
+              <div class="text-sm text-text-muted">User cost</div>
+              <div class="text-xl font-semibold mt-1">People miss steps, waste money, and make procedural mistakes when they cannot see the path clearly.</div>
+            </div>
+            <div class="click-card glass" data-modal="problem-operators">
+              <div class="text-sm text-text-muted">Institutional pain</div>
+              <div class="text-xl font-semibold mt-1">Nonprofits and support teams still manage intake, handoffs, and matter follow-up through disconnected tools.</div>
+            </div>
+          </div>
+        </div>
+        <div class="grid metric-grid grid-cols-1 gap-4 reveal">
+          <div class="metric-card glass">
+            <div class="text-5xl font-extrabold" data-count="3" data-suffix=" layers">0</div>
+            <div class="mt-2 text-text-secondary">People juggle court process, document prep, and help-seeking at the same time.</div>
+          </div>
+          <div class="metric-card glass">
+            <div class="text-5xl font-extrabold" data-count="1" data-suffix=" clear workspace">0</div>
+            <div class="mt-2 text-text-secondary">What users really need is one trustworthy operating system for the matter.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-slide="3">
+    <div class="gradient-mesh"><div class="blob" style="width:340px;height:340px;top:-50px;left:-60px;background:var(--color-accent-2);opacity:.08"></div><div class="blob" style="width:280px;height:280px;bottom:-70px;right:-50px;background:var(--color-accent-1);opacity:.07"></div></div>
+    <canvas class="particle-canvas-ambient" style="position:absolute;inset:0;z-index:1"></canvas>
+    <div class="content">
+      <div class="footer-hint">Why now</div>
+      <p class="section-kicker reveal">Timing</p>
+      <h2 class="reveal font-display text-[clamp(2.2rem,4.2vw,3.5rem)]">The infrastructure finally supports a trust-centered wedge.</h2>
+      <div class="grid three-grid grid-cols-3 gap-5 mt-8">
+        <div class="click-card glass reveal" data-modal="now-digital"><div class="text-sm text-text-muted">Digital courts</div><div class="mt-2 text-2xl font-semibold">Court help, e-filing, and self-service resources are more digital than before.</div></div>
+        <div class="click-card glass reveal" data-modal="now-ai"><div class="text-sm text-text-muted">AI interface shift</div><div class="mt-2 text-2xl font-semibold">AI can now turn messy user situations into guided flows, but trust boundaries matter.</div></div>
+        <div class="click-card glass reveal" data-modal="now-market"><div class="text-sm text-text-muted">Investor readiness</div><div class="mt-2 text-2xl font-semibold">Founders are expected to explain why this moment creates a believable adoption window.</div></div>
+      </div>
+      <div class="glass panel reveal mt-6">
+        <div class="text-sm uppercase tracking-[.16em] text-text-muted">CourtPath thesis</div>
+        <div class="text-[1.2rem] mt-2 text-text-secondary">The wedge is not “AI lawyer.” The wedge is a workflow layer that organizes court work, shows what is official, and escalates to humans before users make costly mistakes.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-slide="4">
+    <div class="gradient-mesh"><div class="blob" style="width:420px;height:420px;top:-110px;right:-90px;background:var(--color-accent-2);opacity:.1"></div><div class="blob" style="width:260px;height:260px;bottom:-80px;left:-40px;background:var(--color-accent-1);opacity:.08"></div></div>
+    <div class="content">
+      <div class="footer-hint">Solution</div>
+      <p class="section-kicker reveal">What CourtPath does</p>
+      <h2 class="reveal font-display text-[clamp(2.2rem,4.5vw,3.6rem)]">CourtPath turns a situation into a managed matter with one visible next step.</h2>
+      <div class="mini-flow mt-8 reveal">
+        <div class="flow-step"><div class="text-sm text-text-muted">1</div><div class="mt-2 font-semibold text-lg">Guided intake</div><div class="mt-2 text-sm text-text-secondary">Describe the issue in plain language.</div></div>
+        <div class="flow-step"><div class="text-sm text-text-muted">2</div><div class="mt-2 font-semibold text-lg">Matter creation</div><div class="mt-2 text-sm text-text-secondary">Organize court, county, status, urgency, and documents.</div></div>
+        <div class="flow-step"><div class="text-sm text-text-muted">3</div><div class="mt-2 font-semibold text-lg">Timeline + tasks</div><div class="mt-2 text-sm text-text-secondary">See what happened, what is missing, and what comes next.</div></div>
+        <div class="flow-step"><div class="text-sm text-text-muted">4</div><div class="mt-2 font-semibold text-lg">Filing readiness</div><div class="mt-2 text-sm text-text-secondary">Prepare documents and follow the filing path safely.</div></div>
+        <div class="flow-step"><div class="text-sm text-text-muted">5</div><div class="mt-2 font-semibold text-lg">Escalation</div><div class="mt-2 text-sm text-text-secondary">Route to legal aid, staff, or professionals when risk rises.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-slide="5">
+    <div class="gradient-mesh"><div class="blob" style="width:300px;height:300px;top:-50px;left:-40px;background:var(--color-accent-1);opacity:.08"></div><div class="blob" style="width:260px;height:260px;bottom:-60px;right:-40px;background:var(--color-accent-2);opacity:.07"></div></div>
+    <div class="content">
+      <div class="footer-hint">Product</div>
+      <p class="section-kicker reveal">Platform modules</p>
+      <h2 class="reveal font-display text-[clamp(2.1rem,4vw,3.4rem)]">A matter-centered product, not a loose bundle of tools.</h2>
+      <div class="grid three-grid grid-cols-3 gap-5 mt-8">
+        <div class="click-card glass reveal" data-modal="mod-intake"><div class="text-sm text-text-muted">Module 1</div><div class="mt-2 text-xl font-semibold">Guided intake</div><p class="mt-2 text-text-secondary">Capture issue details, classify the matter, and create a trusted starting point.</p></div>
+        <div class="click-card glass reveal" data-modal="mod-workspace"><div class="text-sm text-text-muted">Module 2</div><div class="mt-2 text-xl font-semibold">Matter workspace</div><p class="mt-2 text-text-secondary">Show deadlines, urgency, tasks, history, and recent activity in one place.</p></div>
+        <div class="click-card glass reveal" data-modal="mod-filings"><div class="text-sm text-text-muted">Module 3</div><div class="mt-2 text-xl font-semibold">Document + filing readiness</div><p class="mt-2 text-text-secondary">Help users prepare documents, check blockers, and move toward submission.</p></div>
+        <div class="click-card glass reveal" data-modal="mod-alerts"><div class="text-sm text-text-muted">Module 4</div><div class="mt-2 text-xl font-semibold">Alerts + next action</div><p class="mt-2 text-text-secondary">Surface one priority action instead of overwhelming the user with options.</p></div>
+        <div class="click-card glass reveal" data-modal="mod-routing"><div class="text-sm text-text-muted">Module 5</div><div class="mt-2 text-xl font-semibold">Human-help routing</div><p class="mt-2 text-text-secondary">Route to legal aid, support teams, and professionals when the workflow demands it.</p></div>
+        <div class="click-card glass reveal" data-modal="mod-admin"><div class="text-sm text-text-muted">Module 6</div><div class="mt-2 text-xl font-semibold">Professional workspace</div><p class="mt-2 text-text-secondary">Give partner teams queue views, permissions, notes, and auditable support workflows.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-slide="6">
+    <div class="gradient-mesh"><div class="blob" style="width:350px;height:350px;top:-90px;right:-30px;background:var(--color-accent-3);opacity:.08"></div><div class="blob" style="width:240px;height:240px;bottom:-70px;left:-50px;background:var(--color-accent-1);opacity:.07"></div></div>
+    <div class="content">
+      <div class="footer-hint">How it works</div>
+      <p class="section-kicker reveal">User journey</p>
+      <h2 class="reveal font-display text-[clamp(2.1rem,4vw,3.4rem)]">The user starts with a situation, not a legal form.</h2>
+      <div class="grid two-grid grid-cols-[.9fr_1.1fr] gap-6 mt-8">
+        <div class="glass panel reveal">
+          <div class="space-y-4">
+            <div class="flex gap-3"><span class="tag">Input</span><div class="text-text-secondary">“I got served.” “My filing was rejected.” “I need to know what happens next.”</div></div>
+            <div class="flex gap-3"><span class="tag">System</span><div class="text-text-secondary">CourtPath turns that into a structured matter with history, missing items, and urgency cues.</div></div>
+            <div class="flex gap-3"><span class="tag">Outcome</span><div class="text-text-secondary">The user leaves with a matter workspace, a task path, and a safer escalation option when needed.</div></div>
+          </div>
+        </div>
+        <div class="glass panel reveal">
+          <table class="data-table">
+            <thead><tr><th>Old behavior</th><th>With CourtPath</th></tr></thead>
+            <tbody>
+              <tr><td>Search multiple sites</td><td>One matter hub with source labels</td></tr>
+              <tr><td>Guess the next step</td><td>Priority next-action engine</td></tr>
+              <tr><td>Lose documents and deadlines</td><td>Timeline, tasks, and readiness flow</td></tr>
+              <tr><td>Wait too long to seek help</td><td>Built-in escalation path</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-slide="7">
+    <div class="gradient-mesh"><div class="blob" style="width:300px;height:300px;top:-60px;left:-40px;background:var(--color-accent-2);opacity:.08"></div><div class="blob" style="width:290px;height:290px;bottom:-80px;right:-30px;background:var(--color-accent-1);opacity:.07"></div></div>
+    <div class="content">
+      <div class="footer-hint">Users</div>
+      <p class="section-kicker reveal">Dual-audience design</p>
+      <h2 class="reveal font-display text-[clamp(2.1rem,4vw,3.4rem)]">Two users, one architecture.</h2>
+      <div class="grid two-grid grid-cols-2 gap-6 mt-8">
+        <div class="click-card glass reveal" data-modal="user-public">
+          <div class="text-sm text-text-muted">Public users</div>
+          <div class="text-2xl font-semibold mt-2">Self-represented people, families, and small operators.</div>
+          <ul class="mt-4 space-y-2 text-text-secondary"><li>Need plain language.</li><li>Need mobile-friendly flows.</li><li>Need a calm way to track documents, steps, and deadlines.</li></ul>
+        </div>
+        <div class="click-card glass reveal" data-modal="user-org">
+          <div class="text-sm text-text-muted">Professional and partner users</div>
+          <div class="text-2xl font-semibold mt-2">Nonprofits, intake teams, legal-aid staff, and support organizations.</div>
+          <ul class="mt-4 space-y-2 text-text-secondary"><li>Need queues and role-based permissions.</li><li>Need structured handoff and review workflows.</li><li>Need auditable support inside the same matter model.</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-slide="8">
+    <div class="gradient-mesh"><div class="blob" style="width:420px;height:420px;top:-120px;right:-90px;background:var(--color-accent-1);opacity:.1"></div><div class="blob" style="width:250px;height:250px;bottom:-80px;left:-60px;background:var(--color-accent-2);opacity:.08"></div></div>
+    <div class="content">
+      <div class="footer-hint">Market</div>
+      <p class="section-kicker reveal">Opportunity framing</p>
+      <h2 class="reveal font-display text-[clamp(2.1rem,4vw,3.5rem)]">Large pain space, tighter serviceable wedge.</h2>
+      <div class="grid two-grid grid-cols-[1fr_1fr] gap-6 mt-8">
+        <div class="glass panel reveal">
+          <div class="text-sm uppercase tracking-[.14em] text-text-muted">Top-down</div>
+          <div class="text-[1.7rem] font-semibold mt-2">Court navigation, legal intake, document prep, workflow support, and self-help all sit inside the access-to-justice problem.</div>
+          <div class="mt-4 text-text-secondary">This is broad enough to be venture-interesting, but too broad to launch everywhere at once.</div>
+        </div>
+        <div class="glass panel reveal">
+          <div class="text-sm uppercase tracking-[.14em] text-text-muted">Bottom-up wedge</div>
+          <div class="text-[1.7rem] font-semibold mt-2">Start Illinois-first with one production-grade workflow and expand after trust, source quality, and partner motion are proven.</div>
+          <div class="mt-4 text-text-secondary">That keeps the launch credible and aligns with the roadmap’s release strategy.</div>
+        </div>
+      </div>
+      <div class="reveal mt-6">
+        <div class="text-sm text-text-muted mb-2">Illustrative market logic</div>
+        <div class="bar-track"><div class="bar-fill" data-width="92"></div></div>
+        <div class="flex justify-between mt-2 text-sm text-text-secondary"><span>Broad access-to-justice need</span><span>Largest framing layer</span></div>
+        <div class="bar-track mt-4"><div class="bar-fill" data-width="54"></div></div>
+        <div class="flex justify-between mt-2 text-sm text-text-secondary"><span>Workflow + document + intake opportunity</span><span>More product-shaped</span></div>
+        <div class="bar-track mt-4"><div class="bar-fill" data-width="24"></div></div>
+        <div class="flex justify-between mt-2 text-sm text-text-secondary"><span>Illinois-first launch wedge</span><span>Most executable</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-slide="9">
+    <div class="gradient-mesh"><div class="blob" style="width:310px;height:310px;top:-70px;left:-40px;background:var(--color-accent-3);opacity:.08"></div><div class="blob" style="width:250px;height:250px;bottom:-60px;right:-30px;background:var(--color-accent-1);opacity:.08"></div></div>
+    <div class="content">
+      <div class="footer-hint">Why CourtPath wins</div>
+      <p class="section-kicker reveal">Differentiation</p>
+      <h2 class="reveal font-display text-[clamp(2.1rem,4vw,3.4rem)]">The moat is trust architecture plus workflow architecture.</h2>
+      <div class="grid four-grid grid-cols-4 gap-4 mt-8">
+        <div class="click-card glass reveal" data-modal="win-trust"><div class="text-sm text-text-muted">01</div><div class="text-xl font-semibold mt-2">Trust-centered workflow</div><p class="mt-2 text-sm text-text-secondary">Not a generic chatbot, and not a black box.</p></div>
+        <div class="click-card glass reveal" data-modal="win-dual"><div class="text-sm text-text-muted">02</div><div class="text-xl font-semibold mt-2">Dual-audience design</div><p class="mt-2 text-sm text-text-secondary">Public and institutional users share a common matter model.</p></div>
+        <div class="click-card glass reveal" data-modal="win-matter"><div class="text-sm text-text-muted">03</div><div class="text-xl font-semibold mt-2">Matter-centered system</div><p class="mt-2 text-sm text-text-secondary">Timeline, tasks, documents, alerts, and referrals all anchor to one record.</p></div>
+        <div class="click-card glass reveal" data-modal="win-human"><div class="text-sm text-text-muted">04</div><div class="text-xl font-semibold mt-2">Human escalation path</div><p class="mt-2 text-sm text-text-secondary">The product knows when to route the user to a person.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-slide="10">
+    <div class="gradient-mesh"><div class="blob" style="width:360px;height:360px;top:-90px;right:-60px;background:var(--color-accent-2);opacity:.09"></div><div class="blob" style="width:250px;height:250px;bottom:-80px;left:-40px;background:var(--color-accent-1);opacity:.07"></div></div>
+    <div class="content">
+      <div class="footer-hint">Business model</div>
+      <p class="section-kicker reveal">Revenue</p>
+      <h2 class="reveal font-display text-[clamp(2.1rem,4vw,3.4rem)]">Three monetization paths, one core product.</h2>
+      <div class="grid three-grid grid-cols-3 gap-5 mt-8">
+        <div class="click-card glass reveal" data-modal="rev-consumer"><div class="text-sm text-text-muted">Consumer</div><div class="text-2xl font-semibold mt-2">Subscription tiers</div><p class="mt-2 text-text-secondary">Advanced workflow support, premium document help, alerts, and matter management.</p></div>
+        <div class="click-card glass reveal" data-modal="rev-org"><div class="text-sm text-text-muted">Organizations</div><div class="text-2xl font-semibold mt-2">Partner seats</div><p class="mt-2 text-text-secondary">Queue management, team collaboration, matter review, and shared workflow tools.</p></div>
+        <div class="click-card glass reveal" data-modal="rev-services"><div class="text-sm text-text-muted">Enterprise / services</div><div class="text-2xl font-semibold mt-2">Workflow partnerships</div><p class="mt-2 text-text-secondary">Premium services, integrations, or referral-enabled handoffs where allowed.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-slide="11">
+    <div class="gradient-mesh"><div class="blob" style="width:330px;height:330px;top:-50px;left:-40px;background:var(--color-accent-1);opacity:.08"></div><div class="blob" style="width:260px;height:260px;bottom:-70px;right:-30px;background:var(--color-accent-3);opacity:.07"></div></div>
+    <canvas class="particle-canvas-ambient" style="position:absolute;inset:0;z-index:1"></canvas>
+    <div class="content">
+      <div class="footer-hint">Go to market</div>
+      <p class="section-kicker reveal">Distribution</p>
+      <h2 class="reveal font-display text-[clamp(2.1rem,4vw,3.4rem)]">Win a jurisdiction, then expand through trust-bearing channels.</h2>
+      <div class="grid two-grid grid-cols-[1.05fr_.95fr] gap-6 mt-8">
+        <div class="glass panel reveal">
+          <div class="space-y-4">
+            <div><div class="text-sm text-text-muted">Step 1</div><div class="text-xl font-semibold">Launch Illinois-first.</div><div class="text-text-secondary mt-1">Use one realistic self-help and filing ecosystem as the first product proving ground.</div></div>
+            <div><div class="text-sm text-text-muted">Step 2</div><div class="text-xl font-semibold">Add legal-aid and community distribution.</div><div class="text-text-secondary mt-1">Partner channels create demand, trust, and structured pilot motion.</div></div>
+            <div><div class="text-sm text-text-muted">Step 3</div><div class="text-xl font-semibold">Expand through institutional relationships.</div><div class="text-text-secondary mt-1">Convert the partner workflow into a broader multi-jurisdiction system.</div></div>
+          </div>
+        </div>
+        <div class="glass panel reveal">
+          <div class="text-sm uppercase tracking-[.14em] text-text-muted">Why this GTM is believable</div>
+          <ul class="mt-4 space-y-3 text-text-secondary text-[1.02rem]">
+            <li>Jurisdiction-first keeps the data and workflow problem narrow enough to execute.</li>
+            <li>Partner-led distribution lowers trust friction in a difficult category.</li>
+            <li>The same matter model supports both user growth and organization revenue.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-slide="12">
+    <div class="gradient-mesh"><div class="blob" style="width:360px;height:360px;top:-70px;right:-50px;background:var(--color-accent-1);opacity:.08"></div><div class="blob" style="width:230px;height:230px;bottom:-50px;left:-40px;background:var(--color-accent-2);opacity:.08"></div></div>
+    <div class="content">
+      <div class="footer-hint">Traction</div>
+      <p class="section-kicker reveal">Validation</p>
+      <h2 class="reveal font-display text-[clamp(2.1rem,4vw,3.4rem)]">The pre-launch proof points should show disciplined learning, not just vision.</h2>
+      <div class="grid three-grid grid-cols-3 gap-5 mt-8">
+        <div class="metric-card glass reveal"><div class="text-sm text-text-muted">Proof 1</div><div class="text-4xl font-extrabold mt-2">Prototype</div><div class="mt-2 text-text-secondary">A sophisticated clickable product prototype already demonstrates core workflow logic.</div></div>
+        <div class="metric-card glass reveal"><div class="text-sm text-text-muted">Proof 2</div><div class="text-4xl font-extrabold mt-2">Interviews</div><div class="mt-2 text-text-secondary">User discovery, workflow feedback, and partner conversations should tighten the wedge.</div></div>
+        <div class="metric-card glass reveal"><div class="text-sm text-text-muted">Proof 3</div><div class="text-4xl font-extrabold mt-2">Pilots</div><div class="mt-2 text-text-secondary">Pilot interest, advisor support, and onboarding tests become the next validation layer.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-slide="13">
+    <div class="gradient-mesh"><div class="blob" style="width:380px;height:380px;top:-90px;left:-50px;background:var(--color-accent-2);opacity:.09"></div><div class="blob" style="width:250px;height:250px;bottom:-60px;right:-30px;background:var(--color-accent-1);opacity:.07"></div></div>
+    <div class="content">
+      <div class="footer-hint">Roadmap</div>
+      <p class="section-kicker reveal">Release sequence</p>
+      <h2 class="reveal font-display text-[clamp(2.1rem,4vw,3.4rem)]">Build sequence is part of the strategy.</h2>
+      <div class="grid four-grid grid-cols-4 gap-4 mt-8">
+        <div class="click-card glass reveal" data-modal="road-r1"><div class="text-sm text-text-muted">R1</div><div class="text-xl font-semibold mt-2">Illinois-first public MVP</div><p class="mt-2 text-sm text-text-secondary">Prove user flow, trust model, and matter architecture.</p></div>
+        <div class="click-card glass reveal" data-modal="road-r2"><div class="text-sm text-text-muted">R2</div><div class="text-xl font-semibold mt-2">Professional workspace</div><p class="mt-2 text-sm text-text-secondary">Add staff review, queues, and referral collaboration.</p></div>
+        <div class="click-card glass reveal" data-modal="road-r3"><div class="text-sm text-text-muted">R3</div><div class="text-xl font-semibold mt-2">Expanded case types</div><p class="mt-2 text-sm text-text-secondary">Add more templates, workflows, and research tools.</p></div>
+        <div class="click-card glass reveal" data-modal="road-r4"><div class="text-sm text-text-muted">R4</div><div class="text-xl font-semibold mt-2">Multi-jurisdiction</div><p class="mt-2 text-sm text-text-secondary">Expand once source quality and safety controls are stable.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-slide="14">
+    <div class="gradient-mesh"><div class="blob" style="width:360px;height:360px;top:-90px;right:-50px;background:var(--color-accent-3);opacity:.08"></div><div class="blob" style="width:240px;height:240px;bottom:-50px;left:-30px;background:var(--color-accent-1);opacity:.08"></div></div>
+    <div class="content">
+      <div class="footer-hint">Founder fit</div>
+      <p class="section-kicker reveal">Team</p>
+      <h2 class="reveal font-display text-[clamp(2.1rem,4vw,3.4rem)]">Founder-market fit comes from living inside the problem long enough to design around trust.</h2>
+      <div class="grid two-grid grid-cols-[1fr_1fr] gap-6 mt-8">
+        <div class="glass panel reveal">
+          <div class="text-2xl font-semibold">What investors should believe</div>
+          <ul class="mt-4 space-y-3 text-text-secondary">
+            <li>The founder understands the pain deeply, not just abstractly.</li>
+            <li>The founder is willing to build a difficult but defensible product category.</li>
+            <li>The founder has already moved from concept to product artifacts.</li>
+          </ul>
+        </div>
+        <div class="glass panel reveal">
+          <div class="text-2xl font-semibold">What this slide should eventually include</div>
+          <ul class="mt-4 space-y-3 text-text-secondary">
+            <li>Founder bio and relevant experience.</li>
+            <li>Any legal, nonprofit, product, or systems background.</li>
+            <li>Named advisors or pilot partners once confirmed.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-slide="15">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:460px;height:460px;top:-120px;right:-80px;background:var(--color-accent-1);opacity:.16"></div>
+      <div class="blob" style="width:300px;height:300px;bottom:-100px;left:-40px;background:var(--color-accent-2);opacity:.12"></div>
+      <div class="blob" style="width:220px;height:220px;top:48%;left:18%;background:var(--color-accent-3);opacity:.1"></div>
+    </div>
+    <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1"></canvas>
+    <div class="content text-center">
+      <div class="hero-mark reveal"><svg class="logo-svg" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 36C14 22.745 24.745 12 38 12H58V28H38C33.582 28 30 31.582 30 36C30 40.418 33.582 44 38 44H48V60H38C24.745 60 14 49.255 14 36Z" stroke="url(#g2)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M58 12L48 22" stroke="url(#g2)" stroke-width="6" stroke-linecap="round"/><defs><linearGradient id="g2" x1="14" y1="12" x2="58" y2="60" gradientUnits="userSpaceOnUse"><stop stop-color="#56C6FF"/><stop offset="1" stop-color="#91F2C2"/></linearGradient></defs></svg></div>
+      <p class="section-kicker reveal">Ask</p>
+      <h2 class="reveal font-display text-[clamp(2.6rem,5vw,4.8rem)] bg-linear-to-br from-accent-1 via-accent-2 to-accent-3 bg-clip-text text-transparent">Capital to move from sophisticated prototype to pilot.</h2>
+      <div class="reveal mt-6 mx-auto max-w-[900px] text-[1.2rem] text-text-secondary">CourtPath is seeking capital, advisors, pilot partners, and implementation support to prove the Illinois-first wedge, launch a live pilot, and validate demand in a trust-critical category.</div>
+      <div class="reveal mt-8 flex flex-wrap items-center justify-center gap-3">
+        <span class="tag">Capital</span><span class="tag">Advisors</span><span class="tag">Pilot partners</span><span class="tag">Implementation support</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="nav-controls" aria-label="Slide navigation">
+  <button class="nav-btn" onclick="changeSlide(-1)" aria-label="Previous slide">&#8249;</button>
+  <div class="slide-dots" id="dots"></div>
+  <button class="nav-btn" onclick="changeSlide(1)" aria-label="Next slide">&#8250;</button>
+  <span class="slide-counter" id="counter">1 / 15</span>
+</div>
+
+<div class="modal" id="detail-modal" aria-hidden="true">
+  <div class="modal-card">
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <div id="modal-kicker" class="section-kicker"></div>
+        <h3 id="modal-title" class="font-display text-4xl mt-2"></h3>
+      </div>
+      <button class="modal-close" onclick="closeModal()" aria-label="Close detail">✕</button>
+    </div>
+    <div id="modal-body" class="mt-5 text-[1.06rem] leading-7 text-text-secondary"></div>
+  </div>
+</div>
+
+<script>
+let current = 1;
+const total = document.querySelectorAll('.slide').length;
+const dotsContainer = document.getElementById('dots');
+const counter = document.getElementById('counter');
+for (let i = 1; i <= total; i++) { const dot = document.createElement('div'); dot.className = 'dot' + (i === 1 ? ' active' : ''); dot.onclick = () => goToSlide(i); dotsContainer.appendChild(dot); }
+function goToSlide(n) {
+  const prev = document.querySelector('.slide.active');
+  const next = document.querySelector(`.slide[data-slide="${n}"]`);
+  if (prev) prev.classList.remove('active');
+  if (next) { next.classList.add('active'); animateSlide(next); }
+  current = n; updateNav();
+}
+function changeSlide(dir) { let next = current + dir; if (next < 1) next = total; if (next > total) next = 1; goToSlide(next); }
+function updateNav() { document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i + 1 === current)); counter.textContent = current + ' / ' + total; }
+document.addEventListener('keydown', (e) => {
+  if (document.getElementById('detail-modal').classList.contains('active') && e.key === 'Escape') { closeModal(); return; }
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); }
+});
+let touchStartX = 0;
+document.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX);
+document.addEventListener('touchend', e => { const diff = touchStartX - e.changedTouches[0].clientX; if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1); });
+function animateSlide(slide) {
+  slide.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transition = 'none'; el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.offsetHeight;
+    const delay = i * 0.08;
+    el.style.transition = `opacity 0.35s ease ${delay}s, transform 0.35s ease ${delay}s`;
+    el.style.opacity = '1'; el.style.transform = 'translateY(0px)';
+  });
+  animateSlideEffects(slide);
+}
+function animateSlideEffects(slide) {
+  slide.querySelectorAll('[data-count]:not(.counted)').forEach(el => {
+    el.classList.add('counted');
+    const target = parseInt(el.dataset.count); const suffix = el.dataset.suffix || ''; const prefix = el.dataset.prefix || '';
+    let cur = 0; const step = target / 40;
+    const timer = setInterval(() => { cur += step; if (cur >= target) { cur = target; clearInterval(timer); } el.textContent = prefix + Math.round(cur).toLocaleString() + suffix; }, 30);
+  });
+  slide.querySelectorAll('.bar-fill:not(.fill-init)').forEach((bar, i) => {
+    bar.classList.add('fill-init'); bar.style.width = '0%'; bar.style.transition = `width 0.55s ease ${i * 0.08}s`; bar.offsetHeight; bar.style.width = bar.dataset.width + '%';
+  });
+}
+const modalData = {
+  'problem-map': { kicker: 'Fragmentation', title: 'Users patch together a case from disconnected systems.', body: '<p>CourtPath exists because users often move across forms guidance, court websites, filing systems, help resources, and their own notes without a single reliable operating view.</p><p>That fragmentation is exactly why a matter-centered workspace is compelling: it gives one home for status, tasks, events, and source visibility.</p>' },
+  'problem-stakes': { kicker: 'User cost', title: 'Confusion creates real procedural risk.', body: '<p>When users cannot see the workflow clearly, they are more likely to miss deadlines, misunderstand what documents matter, or delay getting human help.</p><p>The pitch should position CourtPath as reducing workflow failure, not promising legal outcomes.</p>' },
+  'problem-operators': { kicker: 'Institutional pain', title: 'Support teams also need better workflow infrastructure.', body: '<p>Legal-aid and nonprofit teams often juggle intake, follow-up, and referrals through fragmented processes.</p><p>CourtPath becomes stronger when one product serves both the public-facing and operator-facing workflow.</p>' },
+  'now-digital': { kicker: 'Why now', title: 'Digital court infrastructure makes a first wedge possible.', body: '<p>The roadmap anchors the first release in Illinois because digital self-help, approved forms, e-filing, and help resources already exist there.</p><p>That lowers launch complexity and creates a concrete proving ground.</p>' },
+  'now-ai': { kicker: 'Why now', title: 'AI now helps turn messy situations into guided flows.', body: '<p>AI improves the interface layer, but CourtPath should frame itself as trust-centered assistance with visible boundaries rather than an all-knowing legal bot.</p>' },
+  'now-market': { kicker: 'Why now', title: 'Investors want timing logic, not just a big problem.', body: '<p>This category becomes more fundable when the founder can explain why digital infrastructure, AI usability, and a jurisdiction-first strategy now combine into a practical entry point.</p>' },
+  'mod-intake': { kicker: 'Module', title: 'Guided intake', body: '<p>Guided intake captures issue details, helps classify the matter, and creates the initial structured record.</p><p>It is the first trust moment in the product.</p>' },
+  'mod-workspace': { kicker: 'Module', title: 'Matter workspace', body: '<p>The matter workspace is the anchor object in the roadmap and PRD. It holds urgency, tasks, status, documents, recent activity, and the next recommended action.</p>' },
+  'mod-filings': { kicker: 'Module', title: 'Document and filing readiness', body: '<p>This flow helps users see completed, incomplete, and blocked steps before a submission attempt.</p><p>It is especially important because users often discover missing requirements too late.</p>' },
+  'mod-alerts': { kicker: 'Module', title: 'Alerts and next-action engine', body: '<p>The roadmap emphasizes visible timestamps, source indicators, and one primary next action.</p><p>That design keeps the interface calm even when the underlying workflow is complex.</p>' },
+  'mod-routing': { kicker: 'Module', title: 'Human-help routing', body: '<p>CourtPath differentiates itself by knowing when to direct the user toward legal aid, limited-scope help, or professional support instead of pretending automation can safely do everything.</p>' },
+  'mod-admin': { kicker: 'Module', title: 'Professional workspace', body: '<p>Partner and staff users need queues, permissions, notes, and structured handoff workflows.</p><p>This is the second major product layer after the public MVP.</p>' },
+  'user-public': { kicker: 'Users', title: 'Public users', body: '<p>The interface must be designed for overwhelmed users first: plain language, one primary action, mobile-friendly flows, and strong distinction between official records and interpretive assistance.</p>' },
+  'user-org': { kicker: 'Users', title: 'Professional and partner users', body: '<p>The same matter model should support support teams, legal-aid organizations, and institutional users without breaking the public user mental model.</p>' },
+  'win-trust': { kicker: 'Differentiation', title: 'Trust-centered workflow', body: '<p>The product should clearly separate official sources, supportive guidance, user-provided content, and AI-generated summaries.</p><p>That source clarity is a strategic advantage, not just a UX nicety.</p>' },
+  'win-dual': { kicker: 'Differentiation', title: 'Dual-audience design', body: '<p>Most products lean consumer-only or operator-only. CourtPath is stronger because it can connect both sides through one matter architecture.</p>' },
+  'win-matter': { kicker: 'Differentiation', title: 'Matter-centered system', body: '<p>The matter is the anchor object. Without it, alerts, filings, referrals, and review workflows stay fragmented.</p>' },
+  'win-human': { kicker: 'Differentiation', title: 'Human escalation path', body: '<p>Risk logic should highlight when self-help may no longer be sufficient and show help options immediately.</p>' },
+  'rev-consumer': { kicker: 'Revenue', title: 'Consumer subscriptions', body: '<p>Consumer revenue can come from advanced workflow support and premium matter management features.</p><p>This path should be framed carefully around value-added workflow support.</p>' },
+  'rev-org': { kicker: 'Revenue', title: 'Partner seats', body: '<p>Organization revenue fits naturally because partner teams need queue management, collaboration, and structured workflow tools.</p>' },
+  'rev-services': { kicker: 'Revenue', title: 'Workflow partnerships', body: '<p>Enterprise and service revenue can come from premium workflow services, enabled handoffs, and deeper implementation partnerships where permitted.</p>' },
+  'road-r1': { kicker: 'Roadmap', title: 'R1 — Illinois-first public MVP', body: '<p>The roadmap recommends a focused release with intake, dashboard, lookup guidance, alerts, filing-readiness support, and help routing.</p>' },
+  'road-r2': { kicker: 'Roadmap', title: 'R2 — Professional workspace', body: '<p>After proving the public workflow, the next layer adds staff review, queues, internal notes, and referral collaboration.</p>' },
+  'road-r3': { kicker: 'Roadmap', title: 'R3 — Expanded case support', body: '<p>Only after the core matter architecture is stable should the product broaden templates, case-type coverage, and research tooling.</p>' },
+  'road-r4': { kicker: 'Roadmap', title: 'R4 — Multi-jurisdiction framework', body: '<p>Multi-jurisdiction expansion should come last, once source quality and safety controls are mature enough to scale.</p>' }
+};
+function openModal(key){ const data = modalData[key]; if(!data) return; document.getElementById('modal-kicker').textContent = data.kicker; document.getElementById('modal-title').textContent = data.title; document.getElementById('modal-body').innerHTML = data.body; const modal = document.getElementById('detail-modal'); modal.classList.add('active'); modal.setAttribute('aria-hidden','false'); }
+function closeModal(){ const modal = document.getElementById('detail-modal'); modal.classList.remove('active'); modal.setAttribute('aria-hidden','true'); }
+document.querySelectorAll('[data-modal]').forEach(el => { el.addEventListener('click', () => openModal(el.dataset.modal)); el.addEventListener('keypress', e => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(el.dataset.modal); } }); el.setAttribute('tabindex','0'); el.setAttribute('role','button'); });
+document.getElementById('detail-modal').addEventListener('click', e => { if(e.target.id === 'detail-modal') closeModal(); });
+document.addEventListener('mousemove', (e) => {
+  const spotlight = document.querySelector('.mouse-spotlight');
+  if (spotlight) spotlight.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(86,198,255,0.07), transparent 40%)`;
+});
+(function(){ let mouseX = innerWidth/2, mouseY = innerHeight/2; const cx = innerWidth/2, cy = innerHeight/2; document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; }); document.querySelectorAll('.slide').forEach((slide,idx)=>{ for(let i=0;i<2;i++){ const s=document.createElement('div'); s.className='deco-shape'; s.dataset.speed=(0.02 + i*0.015).toFixed(3); s.style.width=(160+i*60)+'px'; s.style.height=(160+i*60)+'px'; s.style.left=(8+i*58)+'%'; s.style.top=(14+idx*3+i*18)%80+'%'; slide.appendChild(s); } }); (function tick(){ const ox=(mouseX-cx)/cx, oy=(mouseY-cy)/cy; document.querySelectorAll('.deco-shape').forEach(shape => { const speed=parseFloat(shape.dataset.speed)||0.03; shape.style.transform=`translate(${ox*speed*100}px, ${oy*speed*100}px)`; }); requestAnimationFrame(tick); })(); })();
+window.initParticles = function(canvas, options) {
+  if (!canvas) return; const ctx = canvas.getContext('2d'); canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; const interactive = options.interactive !== false; const count = options.count || (interactive ? 55 : 18); let mx=-1000,my=-1000; const particles = Array.from({ length: count }, () => ({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx:(Math.random()-.5)*.3, vy:(Math.random()-.5)*.3, size:Math.random()*2.5+.8, alpha:Math.random()*.35+.08 })); if(interactive){ canvas.addEventListener('mousemove', e=>{ const rect=canvas.getBoundingClientRect(); mx=e.clientX-rect.left; my=e.clientY-rect.top; }); canvas.addEventListener('mouseleave', ()=>{mx=-1000;my=-1000;}); }
+  (function animate(){ ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{ if(interactive){ const dx=p.x-mx, dy=p.y-my; const dist=Math.sqrt(dx*dx+dy*dy)||1; if(dist<120){ const force=(120-dist)/120*2; p.vx+=(dx/dist)*force*.1; p.vy+=(dy/dist)*force*.1; } } p.vx*=.98; p.vy*=.98; p.x+=p.vx; p.y+=p.vy; if(p.x<0) p.x=canvas.width; if(p.x>canvas.width) p.x=0; if(p.y<0) p.y=canvas.height; if(p.y>canvas.height) p.y=0; ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,Math.PI*2); ctx.fillStyle=`rgba(86,198,255,${p.alpha})`; ctx.fill(); }); requestAnimationFrame(animate); })();
+};
+document.querySelectorAll('.particle-canvas').forEach(c => window.initParticles(c, { interactive:true, count:55 }));
+document.querySelectorAll('.particle-canvas-ambient').forEach(c => window.initParticles(c, { interactive:false, count:18 }));
+try { animateSlide(document.querySelector('.slide.active')); } catch(e) { console.warn('Initial animation error:', e); }
+</script>
+</body>
+</html>
